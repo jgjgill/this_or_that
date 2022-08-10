@@ -55,6 +55,7 @@
         "ignorePseudoClasses": ["global"]
       }
     ],
-    "string-quotes": "single"
+    "string-quotes": "single",
+    "value-no-vendor-prefix": [true, {"ignoreValues": "box"}]
   }
 }

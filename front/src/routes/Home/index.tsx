@@ -1,9 +1,9 @@
-import Temp from 'components/Home/Temp'
+import PostList from 'components/Home/PostList'
 
 const Home = () => {
   return (
     <div>
-      <Temp />
+      <PostList />
     </div>
   )
 }
