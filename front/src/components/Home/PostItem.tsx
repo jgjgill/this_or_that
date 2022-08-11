@@ -1,21 +1,27 @@
+import { useQuery } from '@tanstack/react-query'
 import { CommentIcon, LikeIcon, VoteIcon } from 'assets/svgs'
+import dayjs from 'dayjs'
+import { fetchUser } from 'services/api'
+import { IPost } from 'types/post'
 import styles from './postItem.module.scss'
 
-const PostItem = () => {
+interface PostItemProps {
+  postData: IPost
+}
+
+const PostItem = ({ postData }: PostItemProps) => {
+  const { isLoading, isError, data: authorUserData } = useQuery(['authorUser'], () => fetchUser(1))
+
+  const postCreatedAt = dayjs(postData.createdAt).format('YYYY-MM-DD')
+
   return (
     <div className={styles.postWrapper}>
-      <h2 className={styles.postTitle}>Title</h2>
+      <h2 className={styles.postTitle}>{postData.title}</h2>
 
       <div className={styles.contentInfo}>
-        <p className={styles.this}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Id voluptatem nam quae minus esse earum nulla
-          molestiae aliquam debitis quas saepe alias, tempore optio veniam numquam in! Nisi, tenetur dolore?
-        </p>
+        <p className={styles.this}>{postData.this}</p>
 
-        <p className={styles.that}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis fuga vel velit ad, eos culpa? Fugiat
-          laboriosam, rerum eos eveniet, laborum a incidunt praesentium consequuntur, sequi itaque beatae esse omnis?
-        </p>
+        <p className={styles.that}>{postData.that}</p>
       </div>
 
       <div className={styles.bottomWrapper}>
@@ -37,8 +43,8 @@ const PostItem = () => {
         </div>
 
         <div className={styles.uploadInfo}>
-          <time dateTime='2022-08-10'>10분 전</time>
-          <span>닉네임</span>
+          <time dateTime={postCreatedAt}>{postCreatedAt}</time>
+          <span>{authorUserData?.name}</span>
         </div>
       </div>
     </div>

@@ -1,11 +1,15 @@
+import { useQuery } from '@tanstack/react-query'
+import { fetchPosts } from 'services/api'
 import PostItem from './PostItem'
 import styles from './postList.module.scss'
 
 const PostList = () => {
+  const { isLoading, isError, data: postsData } = useQuery(['posts'], fetchPosts)
+
   return (
     <div className={styles.temp}>
-      {[1, 2, 3, 4].map((item) => (
-        <PostItem key={item} />
+      {postsData?.map((item) => (
+        <PostItem key={item.id} postData={item} />
       ))}
     </div>
   )

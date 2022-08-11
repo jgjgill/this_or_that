@@ -5,16 +5,21 @@ import React from 'react'
 import reportWebVitals from 'reportWebVitals'
 import App from 'routes'
 
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { store } from './states'
 
 import './styles/index.scss'
 
+const queryClient = new QueryClient()
+
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </QueryClientProvider>
   </React.StrictMode>
 )
 
