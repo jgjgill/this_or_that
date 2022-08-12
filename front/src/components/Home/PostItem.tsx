@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { CommentIcon, LikeIcon, VoteIcon } from 'assets/svgs'
 import dayjs from 'dayjs'
-import { fetchUser } from 'services/api'
+import { getUser } from 'services/api'
 import { IPost } from 'types/post'
 import styles from './postItem.module.scss'
 
@@ -10,7 +10,7 @@ interface PostItemProps {
 }
 
 const PostItem = ({ postData }: PostItemProps) => {
-  const { isLoading, isError, data: authorUserData } = useQuery(['authorUser'], () => fetchUser(1))
+  const { isLoading, isError, data: authorUserData } = useQuery(['authorUser'], () => getUser(1))
 
   const postCreatedAt = dayjs(postData.createdAt).format('YYYY-MM-DD')
 

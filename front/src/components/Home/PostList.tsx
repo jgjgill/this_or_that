@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query'
-import { fetchPosts } from 'services/api'
+import { getPosts } from 'services/api'
 import PostItem from './PostItem'
 import styles from './postList.module.scss'
 
 const PostList = () => {
-  const { isLoading, isError, data: postsData } = useQuery(['posts'], fetchPosts)
+  const { isLoading, isError, data: postsData } = useQuery(['posts'], getPosts)
 
   return (
     <div className={styles.temp}>

@@ -1,33 +1,51 @@
 import { useMutation } from '@tanstack/react-query'
-import axios from 'axios'
+import { useAppSelector } from 'hooks/useAppSelector'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { postNewPost, postNewThatImage, postNewThisImage } from 'services/api'
+import { getThatImage, getThisImage, setThatImagePath, setThisImagePath } from 'states/imageData'
+import { IPost } from 'types/post'
+import CreateImage from './Image/CreateImage'
 import styles from './postCreateForm.module.scss'
-
-interface IPost {
-  title: string
-  this: string
-  that: string
-  description: string
-  authorId: number
-}
 
 const PostCreateForm = () => {
   const { register, handleSubmit } = useForm<IPost>()
 
-  const mutation = useMutation((newPost: IPost) => {
-    return axios.post('http://localhost:3005/post', newPost)
+  const mutationNewPost = useMutation((newPost: IPost) => {
+    return postNewPost(newPost)
   })
 
+  const thisImageData = useAppSelector(getThisImage)
+  const thatImageData = useAppSelector(getThatImage)
+
   const formValid: SubmitHandler<IPost> = (data) => {
-    mutation.mutate({ ...data, authorId: 1 })
+    mutationNewPost.mutate({ ...data, authorId: 1 })
   }
 
+  console.log(thisImageData)
+  console.log(thatImageData)
+
   return (
-    <form onSubmit={handleSubmit(formValid)} className={styles.temp}>
+    <form onSubmit={handleSubmit(formValid)} className={styles.formWrapper}>
       <input type='text' placeholder='title' {...register('title', { required: true })} />
-      <input type='text' placeholder='this' {...register('this', { required: true })} />
-      <input type='text' placeholder='that' {...register('that', { required: true })} />
+
+      <CreateImage
+        register={register}
+        postNewImage={postNewThisImage}
+        setImagePath={setThisImagePath}
+        imageData={thisImageData}
+        inputImage='this'
+      />
+
+      <CreateImage
+        register={register}
+        postNewImage={postNewThatImage}
+        setImagePath={setThatImagePath}
+        imageData={thatImageData}
+        inputImage='that'
+      />
+
       <input type='text' placeholder='description' {...register('description', { required: true })} />
+
       <button type='submit'>submit</button>
     </form>
   )
