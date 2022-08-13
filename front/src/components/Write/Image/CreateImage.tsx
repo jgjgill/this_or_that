@@ -1,5 +1,5 @@
 import { DragEvent, useEffect, useState } from 'react'
-import { UseFormRegister } from 'react-hook-form'
+import { FormState, UseFormRegister } from 'react-hook-form'
 import { IPost } from 'types/post'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { AxiosResponse } from 'axios'
@@ -7,18 +7,20 @@ import { useAppDispatch } from 'hooks/useAppDispatch'
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit'
 import { getLastImage } from 'services/api'
 import { IImage } from 'types/image'
+import Input from 'components/Common/Input'
 import styles from './createImage.module.scss'
 import PreviewImage from './PreviewImage'
 
 interface CreateImageProps {
   register: UseFormRegister<IPost>
+  formState: FormState<IPost>
   postNewImage: (newImage: FormData) => Promise<AxiosResponse<any, any>>
   setImagePath: ActionCreatorWithPayload<IImage, string>
   imageData: IImage | null
   inputImage: 'this' | 'that'
 }
 
-const CreateImage = ({ register, postNewImage, setImagePath, imageData, inputImage }: CreateImageProps) => {
+const CreateImage = ({ register, formState, postNewImage, setImagePath, imageData, inputImage }: CreateImageProps) => {
   const [dragOver, setDragOver] = useState(false)
   const [isDrop, setIsDrop] = useState(false)
 
@@ -73,8 +75,6 @@ const CreateImage = ({ register, postNewImage, setImagePath, imageData, inputIma
 
   return (
     <div className={styles.imageWrapper}>
-      <input type='text' placeholder={inputImage} {...register(inputImage, { required: true })} />
-
       <div onDragOver={handleDragOver} onDrop={handleDrop}>
         <div className={styles.imageBox}>
           {imageData && <PreviewImage imagePath={imageData.imagePath} altText={inputImage} />}
@@ -83,6 +83,12 @@ const CreateImage = ({ register, postNewImage, setImagePath, imageData, inputIma
 
         {dragOver && <div className={styles.drapOver} />}
       </div>
+
+      <Input
+        placeholder={inputImage}
+        register={register(inputImage, { required: true })}
+        error={formState.errors[inputImage]}
+      />
     </div>
   )
 }

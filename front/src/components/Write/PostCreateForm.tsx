@@ -1,4 +1,5 @@
 import { useMutation } from '@tanstack/react-query'
+import Input from 'components/Common/Input'
 import { useAppSelector } from 'hooks/useAppSelector'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { postNewPost, postNewThatImage, postNewThisImage } from 'services/api'
@@ -8,7 +9,7 @@ import CreateImage from './Image/CreateImage'
 import styles from './postCreateForm.module.scss'
 
 const PostCreateForm = () => {
-  const { register, handleSubmit } = useForm<IPost>()
+  const { register, handleSubmit, formState } = useForm<IPost>()
 
   const mutationNewPost = useMutation((newPost: IPost) => {
     return postNewPost(newPost)
@@ -26,10 +27,11 @@ const PostCreateForm = () => {
 
   return (
     <form onSubmit={handleSubmit(formValid)} className={styles.formWrapper}>
-      <input type='text' placeholder='title' {...register('title', { required: true })} />
+      <Input placeholder='title' register={register('title', { required: true })} error={formState.errors.title} />
 
       <CreateImage
         register={register}
+        formState={formState}
         postNewImage={postNewThisImage}
         setImagePath={setThisImagePath}
         imageData={thisImageData}
@@ -38,13 +40,18 @@ const PostCreateForm = () => {
 
       <CreateImage
         register={register}
+        formState={formState}
         postNewImage={postNewThatImage}
         setImagePath={setThatImagePath}
         imageData={thatImageData}
         inputImage='that'
       />
 
-      <input type='text' placeholder='description' {...register('description', { required: true })} />
+      <Input
+        placeholder='description'
+        register={register('description', { required: true })}
+        error={formState.errors.description}
+      />
 
       <button type='submit'>submit</button>
     </form>
