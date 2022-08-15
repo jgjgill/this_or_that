@@ -6,8 +6,6 @@ import styles from './postList.module.scss'
 const PostList = () => {
   const { isLoading, isError, data: postsData } = useQuery(['posts'], getPosts)
 
-  console.log(postsData)
-
   return (
     <div className={styles.postsList}>
       {postsData?.map((item) => (

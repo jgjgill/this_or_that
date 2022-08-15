@@ -10,5 +10,6 @@ export interface IPost {
   title: string
   createdAt: Date
   updatedAt: Date
+  comments: []
   _count: { comments: number; likes: number }
 }

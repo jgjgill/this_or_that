@@ -1,0 +1,48 @@
+@use '/src/styles/constants/colors';
+
+.postContentWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  min-height: 80vh;
+  padding: 20px;
+  color: colors.$WHITE;
+  background-color: colors.$GRAY3;
+  border-radius: 20px;
+}
+
+.postWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.postTitle {
+  font-size: x-large;
+  text-align: center;
+}
+
+.postVersusWrapper {
+  display: flex;
+  gap: 20px;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.versusWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+}
+
+.versusText {
+  font-size: larger;
+}
+
+.postDescription {
+  font-size: large;
+  line-height: 20px;
+}

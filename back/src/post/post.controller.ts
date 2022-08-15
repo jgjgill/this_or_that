@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { Post as PostData } from '@prisma/client';
 import { PostService } from './post.service';
 
@@ -9,6 +9,11 @@ export class PostController {
   @Get()
   async findAllPost(): Promise<PostData[] | null> {
     return this.postService.findAllPost();
+  }
+
+  @Get(':id')
+  async findPost(@Param('id') id: string): Promise<PostData | null> {
+    return this.postService.findPost({ id: Number(id) });
   }
 
   @Post()

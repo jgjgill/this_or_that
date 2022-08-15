@@ -1,4 +1,3 @@
-import { useQuery } from '@tanstack/react-query'
 import { CommentIcon, LikeIcon, VoteIcon } from 'assets/svgs'
 import PreviewImage from 'components/Common/PreviewImage'
 import dayjs from 'dayjs'
@@ -26,12 +25,14 @@ const PostItem = ({ postData }: PostItemProps) => {
       <div className={styles.contentInfo}>
         <div className={styles.contentWrapper}>
           {postData.thisImagePath && <PreviewImage imagePath={postData.thisImagePath} altText={postData.this} />}
-          <p className={styles.this}>{postData.this}</p>
+
+          <p className={styles.versusText}>{postData.this}</p>
         </div>
 
         <div className={styles.contentWrapper}>
           {postData.thatImagePath && <PreviewImage imagePath={postData.thatImagePath} altText={postData.this} />}
-          <p className={styles.that}>{postData.that}</p>
+
+          <p className={styles.versusText}>{postData.that}</p>
         </div>
       </div>
 

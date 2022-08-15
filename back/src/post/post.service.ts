@@ -26,6 +26,20 @@ export class PostService {
     });
   }
 
+  async findPost(id: Prisma.PostWhereUniqueInput): Promise<Post | null> {
+    return this.prisma.post.findUnique({
+      where: id,
+      include: {
+        author: {
+          select: {
+            name: true,
+          },
+        },
+        comments: true,
+      },
+    });
+  }
+
   async createPost(postData: Prisma.PostCreateInput): Promise<Post> {
     return this.prisma.post.create({ data: postData });
   }

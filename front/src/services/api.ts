@@ -8,6 +8,8 @@ const url = process.env.REACT_APP_API_URL
 
 export const getPosts = (): Promise<IPost[]> => axios.get(`${url}/post`).then((res) => res.data)
 
+export const getPost = (postId: string): Promise<IPost> => axios.get(`${url}/post/${postId}`).then((res) => res.data)
+
 export const getLastImage = (): Promise<IImage> => axios.get(`${url}/image/-1`).then((res) => res.data)
 
 export const postNewPost = (newPost: IPost) => axios.post(`${url}/post`, newPost)
