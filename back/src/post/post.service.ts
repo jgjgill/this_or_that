@@ -7,7 +7,23 @@ export class PostService {
   constructor(private prisma: PrismaService) {}
 
   async findAllPost(): Promise<Post[] | null> {
-    return this.prisma.post.findMany();
+    return this.prisma.post.findMany({
+      include: {
+        author: {
+          select: {
+            name: true,
+          },
+        },
+
+        _count: {
+          select: { comments: true, likes: true },
+        },
+      },
+
+      orderBy: {
+        id: 'desc',
+      },
+    });
   }
 
   async createPost(postData: Prisma.PostCreateInput): Promise<Post> {

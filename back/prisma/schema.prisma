@@ -22,19 +22,19 @@ model User {
 }
 
 model Post {
-  id          Int       @id @default(autoincrement())
-  title       String
-  this        String
-  thisImage   String?
-  that        String
-  thatImage   String?
-  description String    @db.LongText
-  likes       Like[]
-  comments    Comment[]
-  author      User      @relation(fields: [authorId], references: [id])
-  authorId    Int
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id            Int       @id @default(autoincrement())
+  title         String
+  this          String
+  that          String
+  description   String    @db.LongText
+  thisImagePath String?
+  thatImagePath String?
+  likes         Like[]
+  comments      Comment[]
+  author        User      @relation(fields: [authorId], references: [id])
+  authorId      Int
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }
 
 model Like {

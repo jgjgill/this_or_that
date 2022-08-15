@@ -1,5 +1,13 @@
+@use '/src/styles/constants/colors';
+
 .formWrapper {
   display: flex;
   flex-direction: column;
   gap: 20px;
+}
+
+.submitButton {
+  padding: 10px;
+  border: 2px solid colors.$GRAY3;
+  border-radius: 10px;
 }

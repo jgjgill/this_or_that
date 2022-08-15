@@ -1,4 +1,4 @@
-import { DragEvent, useEffect, useState } from 'react'
+import { ChangeEvent, DragEvent, useEffect, useState } from 'react'
 import { FormState, UseFormRegister } from 'react-hook-form'
 import { IPost } from 'types/post'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
@@ -8,8 +8,10 @@ import { ActionCreatorWithPayload } from '@reduxjs/toolkit'
 import { getLastImage } from 'services/api'
 import { IImage } from 'types/image'
 import Input from 'components/Common/Input'
+import { cx } from 'styles'
+import { spawn } from 'child_process'
 import styles from './createImage.module.scss'
-import PreviewImage from './PreviewImage'
+import PreviewImage from '../../Common/PreviewImage'
 
 interface CreateImageProps {
   register: UseFormRegister<IPost>
@@ -48,6 +50,7 @@ const CreateImage = ({ register, formState, postNewImage, setImagePath, imageDat
 
   const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault()
+
     setDragOver(true)
   }
 
@@ -67,22 +70,45 @@ const CreateImage = ({ register, formState, postNewImage, setImagePath, imageDat
     setIsDrop(true)
   }
 
+  const handleDragLeave = (e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+
+    if (e.currentTarget.contains(e.relatedTarget as Node)) {
+      return
+    }
+
+    setDragOver(false)
+  }
+
   useEffect(() => {
     if (!previewImageData || !isDrop) return
 
     dispatch(setImagePath(previewImageData))
   }, [previewImageData, isDrop, dispatch, setImagePath])
 
+  const ImageToggleText = () => {
+    return (
+      <div className={styles.imageToggleText}>
+        {dragOver && <span>Upload!</span>}
+        {!dragOver && <span>Image Drop!</span>}
+      </div>
+    )
+  }
+
   return (
     <div className={styles.imageWrapper}>
-      <div onDragOver={handleDragOver} onDrop={handleDrop}>
-        <div className={styles.imageBox}>
-          {imageData && <PreviewImage imagePath={imageData.imagePath} altText={inputImage} />}
-          {!imageData && <span>Image</span>}
-        </div>
+      <div
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
+        onDragLeave={handleDragLeave}
+        className={cx(styles.uploadBox, { [styles.imageBorder]: !imageData })}
+      >
+        {imageData && <PreviewImage imagePath={imageData.imagePath} altText={inputImage} />}
 
-        {dragOver && <div className={styles.drapOver} />}
+        {!imageData && <span>Image Upload</span>}
       </div>
+
+      <ImageToggleText />
 
       <Input
         placeholder={inputImage}

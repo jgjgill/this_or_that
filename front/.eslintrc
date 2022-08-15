@@ -39,7 +39,8 @@
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
     "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
     "no-param-reassign": ["error", { "props": false }],
-    "react/jsx-props-no-spreading": ["off"]
+    "react/jsx-props-no-spreading": ["off"],
+    "no-underscore-dangle": ["off"]
 
   }
 }

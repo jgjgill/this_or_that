@@ -19,7 +19,12 @@ const PostCreateForm = () => {
   const thatImageData = useAppSelector(getThatImage)
 
   const formValid: SubmitHandler<IPost> = (data) => {
-    mutationNewPost.mutate({ ...data, authorId: 1 })
+    mutationNewPost.mutate({
+      ...data,
+      thisImagePath: thisImageData?.imagePath,
+      thatImagePath: thatImageData?.imagePath,
+      authorId: 1,
+    })
   }
 
   console.log(thisImageData)
@@ -53,7 +58,9 @@ const PostCreateForm = () => {
         error={formState.errors.description}
       />
 
-      <button type='submit'>submit</button>
+      <button type='submit' className={styles.submitButton}>
+        submit
+      </button>
     </form>
   )
 }
