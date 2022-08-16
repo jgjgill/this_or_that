@@ -12,8 +12,12 @@ export const getPost = (postId: string): Promise<IPost> => axios.get(`${url}/pos
 
 export const getLastImage = (): Promise<IImage> => axios.get(`${url}/image/-1`).then((res) => res.data)
 
+export const getPostVotes = (postId: string): Promise<any> => axios.get(`${url}/vote/${postId}`).then((res) => res.data)
+
 export const postNewPost = (newPost: IPost) => axios.post(`${url}/post`, newPost)
 
 export const postNewThisImage = (newPost: FormData) => axios.post(`${url}/image/this_image`, newPost)
 
 export const postNewThatImage = (newImage: FormData) => axios.post(`${url}/image/that_image`, newImage)
+
+export const postNewPostVote = (newPostVote: any) => axios.post(`${url}/vote`, newPostVote)

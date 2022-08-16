@@ -9,7 +9,6 @@ import { getLastImage } from 'services/api'
 import { IImage } from 'types/image'
 import Input from 'components/Common/Input'
 import { cx } from 'styles'
-import { spawn } from 'child_process'
 import styles from './createImage.module.scss'
 import PreviewImage from '../../Common/PreviewImage'
 
@@ -32,7 +31,7 @@ const CreateImage = ({ register, formState, postNewImage, setImagePath, imageDat
     isLoading,
     isError,
     data: previewImageData,
-  } = useQuery([`${inputImage}Image`, isDrop], () => getLastImage(), {
+  } = useQuery([`${inputImage}Image`, isDrop], getLastImage, {
     enabled: isDrop,
     staleTime: Infinity,
     initialData: null,

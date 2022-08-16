@@ -36,6 +36,12 @@
   gap: 10px;
   align-items: center;
   width: 100%;
+  color: colors.$WHITE;
+  transition: 0.2s;
+
+  &:hover {
+    scale: 1.1;
+  }
 }
 
 .versusText {

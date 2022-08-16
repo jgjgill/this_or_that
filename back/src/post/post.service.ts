@@ -16,7 +16,7 @@ export class PostService {
         },
 
         _count: {
-          select: { comments: true, likes: true },
+          select: { comments: true, likes: true, voters: true },
         },
       },
 

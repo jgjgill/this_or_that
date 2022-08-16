@@ -40,7 +40,7 @@ const PostItem = ({ postData }: PostItemProps) => {
         <div className={styles.countInfo}>
           <div className={styles.countWrapper}>
             <VoteIcon className={styles.svgIcon} />
-            <span>투표 10회</span>
+            <span>투표 {postData._count.voters}회</span>
           </div>
 
           <div className={styles.countWrapper}>
