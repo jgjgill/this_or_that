@@ -1,7 +1,8 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
+import { LikeIcon } from 'assets/svgs'
 import PreviewImage from 'components/Common/PreviewImage'
 import dayjs from 'dayjs'
-import { getPostVotes, postNewPostVote } from 'services/api'
+import { getPostVotes, INewPostLike, INewPostVote, postNewPostLike, postNewPostVote } from 'services/api'
 import { cx } from 'styles'
 import { IPost } from 'types/post'
 import styles from './postContent.module.scss'
@@ -10,7 +11,7 @@ interface PostContentProps {
   postContentData: IPost
 }
 
-const tempUserId = 2
+const tempUserId = 1
 
 const PostContent = ({ postContentData }: PostContentProps) => {
   const {
@@ -19,11 +20,15 @@ const PostContent = ({ postContentData }: PostContentProps) => {
     data: postVoteData,
   } = useQuery([`vote_post${postContentData.id}_user${tempUserId}`], () => getPostVotes(postContentData.id!))
 
-  const postCreatedAt = dayjs(postContentData.createdAt).format('YYYY-MM-DD')
-
-  const mutationNewPostVote = useMutation((newPostVote: any) => {
+  const mutationNewPostVote = useMutation((newPostVote: INewPostVote) => {
     return postNewPostVote(newPostVote)
   })
+
+  const mutationNewPostLike = useMutation((newPostLike: INewPostLike) => {
+    return postNewPostLike(newPostLike)
+  })
+
+  const postCreatedAt = dayjs(postContentData.createdAt).format('YYYY-MM-DD')
 
   const handleClickThis = () => {
     mutationNewPostVote.mutate({
@@ -38,6 +43,13 @@ const PostContent = ({ postContentData }: PostContentProps) => {
       postId: postContentData.id,
       userId: tempUserId,
       assignedBy: 'that',
+    })
+  }
+
+  const handleClickLike = () => {
+    mutationNewPostLike.mutate({
+      postId: postContentData.id,
+      userId: tempUserId,
     })
   }
 
@@ -76,7 +88,10 @@ const PostContent = ({ postContentData }: PostContentProps) => {
 
       <p className={styles.postDescription}>{postContentData.description}</p>
 
-      <button type='button'>Like</button>
+      <button type='button' onClick={handleClickLike} className={styles.likeButton}>
+        <LikeIcon className={styles.svgIcon} />
+        <span>Like</span>
+      </button>
     </div>
   )
 }

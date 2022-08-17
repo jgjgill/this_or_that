@@ -40,7 +40,7 @@
   transition: 0.2s;
 
   &:hover {
-    scale: 1.1;
+    scale: 1.05;
   }
 }
 
@@ -51,4 +51,27 @@
 .postDescription {
   font-size: large;
   line-height: 20px;
+}
+
+.likeButton {
+  display: flex;
+  gap: 5px;
+  padding: 10px;
+  margin-top: auto;
+  margin-right: auto;
+  color: colors.$WHITE;
+  border: 2px solid colors.$WHITE;
+  border-radius: 10px;
+  transition: 0.2s;
+
+  &:hover {
+    scale: 1.05;
+  }
+
+  .svgIcon {
+    width: 15px;
+    height: 15px;
+    fill: colors.$GRAY3;
+    stroke: colors.$WHITE;
+  }
 }

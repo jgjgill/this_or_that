@@ -39,10 +39,12 @@
 
   .versusText {
     display: -webkit-box;
+    height: auto;
+    margin-bottom: auto;
     overflow: hidden;
     text-overflow: ellipsis;
     word-wrap: break-word;
-    -webkit-line-clamp: 4;
+    -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
   }
 }

@@ -6,24 +6,24 @@ import { PrismaService } from 'src/prisma.service';
 export class VoteService {
   constructor(private prisma: PrismaService) {}
 
-  async findPostVotes(id: number): Promise<any | null> {
+  async findPostVotes(postId: number): Promise<any | null> {
     const thisCount = await this.prisma.vote.count({
       where: {
-        postId: id,
+        postId,
         assignedBy: 'this',
       },
     });
 
     const thatCount = await this.prisma.vote.count({
       where: {
-        postId: id,
+        postId,
         assignedBy: 'that',
       },
     });
 
     const sumCount = await this.prisma.vote.count({
       where: {
-        postId: id,
+        postId,
       },
     });
 

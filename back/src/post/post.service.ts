@@ -30,11 +30,7 @@ export class PostService {
     return this.prisma.post.findUnique({
       where: id,
       include: {
-        author: {
-          select: {
-            name: true,
-          },
-        },
+        author: { select: { name: true } },
         comments: true,
       },
     });

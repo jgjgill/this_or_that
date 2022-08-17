@@ -7,8 +7,8 @@ export class VoteController {
   constructor(private readonly voteService: VoteService) {}
 
   @Get(':id')
-  async findPostVotes(@Param('id') id: string): Promise<any | null> {
-    return this.voteService.findPostVotes(Number(id));
+  async findPostVotes(@Param('id') postId: string): Promise<any | null> {
+    return this.voteService.findPostVotes(Number(postId));
   }
 
   @Post()
