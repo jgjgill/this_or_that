@@ -1,5 +1,7 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { Vote } from '@prisma/client';
+import { User } from 'src/common/decorators/user.decorator';
+import { LoggedInGuard } from 'src/google-oauth/logged-in.guard';
 import { VoteService } from './vote.service';
 
 @Controller('vote')
@@ -12,12 +14,16 @@ export class VoteController {
   }
 
   @Post()
-  async createPostVote(@Body() postVoteData: Vote): Promise<Vote> {
-    const { postId, userId, ...newVote } = postVoteData;
+  @UseGuards(LoggedInGuard)
+  async createPostVote(
+    @Body() postVoteData: Vote,
+    @User() user,
+  ): Promise<Vote> {
+    const { postId, ...newVote } = postVoteData;
     return this.voteService.createPostVote({
       ...newVote,
       post: { connect: { id: postId } },
-      user: { connect: { id: userId } },
+      user: { connect: { id: user.id } },
     });
   }
 }

@@ -7,9 +7,20 @@ import { CommentModule } from './comment/comment.module';
 import { LikeModule } from './like/like.module';
 import { ImageModule } from './image/image.module';
 import { VoteModule } from './vote/vote.module';
+import { GoogleOauthModule } from './google-oauth/google-oauth.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [UserModule, PostModule, CommentModule, LikeModule, ImageModule, VoteModule],
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
+    UserModule,
+    PostModule,
+    CommentModule,
+    LikeModule,
+    ImageModule,
+    VoteModule,
+    GoogleOauthModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

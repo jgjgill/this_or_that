@@ -31,6 +31,7 @@ export class VoteService {
   }
 
   async createPostVote(postVoteData: Prisma.VoteCreateInput): Promise<Vote> {
+    console.log(postVoteData);
     return this.prisma.vote.create({
       data: postVoteData,
     });

@@ -6,16 +6,16 @@ const url = process.env.REACT_APP_API_URL
 
 export interface INewPostVote {
   postId: number
-  userId: number
   assignedBy: 'this' | 'that'
 }
 
 export interface INewPostLike {
   postId: number
-  userId: number
 }
 
 // export const getUser = (userId: number): Promise<IUser> => axios.get(`${url}/user/${userId}`).then((res) => res.data)
+
+axios.defaults.withCredentials = true
 
 export const getPosts = (): Promise<IPost[]> => axios.get(`${url}/post`).then((res) => res.data)
 

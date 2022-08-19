@@ -18,7 +18,9 @@ const PostContent = ({ postContentData }: PostContentProps) => {
     isLoading,
     isError,
     data: postVoteData,
-  } = useQuery([`vote_post${postContentData.id}_user${tempUserId}`], () => getPostVotes(postContentData.id!))
+  } = useQuery([`vote_post${postContentData.id}`], () => getPostVotes(postContentData.id!), {
+    staleTime: Infinity,
+  })
 
   const mutationNewPostVote = useMutation((newPostVote: INewPostVote) => {
     return postNewPostVote(newPostVote)
@@ -33,7 +35,6 @@ const PostContent = ({ postContentData }: PostContentProps) => {
   const handleClickThis = () => {
     mutationNewPostVote.mutate({
       postId: postContentData.id,
-      userId: tempUserId,
       assignedBy: 'this',
     })
   }
@@ -41,7 +42,6 @@ const PostContent = ({ postContentData }: PostContentProps) => {
   const handleClickThat = () => {
     mutationNewPostVote.mutate({
       postId: postContentData.id,
-      userId: tempUserId,
       assignedBy: 'that',
     })
   }
@@ -49,7 +49,6 @@ const PostContent = ({ postContentData }: PostContentProps) => {
   const handleClickLike = () => {
     mutationNewPostLike.mutate({
       postId: postContentData.id,
-      userId: tempUserId,
     })
   }
 

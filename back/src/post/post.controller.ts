@@ -21,9 +21,7 @@ export class PostController {
     const { authorId, ...newPost } = post;
     return this.postService.createPost({
       ...newPost,
-      author: {
-        connect: { id: authorId },
-      },
+      author: { connect: { id: authorId } },
     });
   }
 }
