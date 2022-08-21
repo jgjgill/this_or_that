@@ -48,6 +48,11 @@
   font-size: larger;
 }
 
+.countWrapper {
+  display: flex;
+  gap: 10px;
+}
+
 .postDescription {
   font-size: large;
   line-height: 20px;
@@ -67,11 +72,15 @@
   &:hover {
     scale: 1.05;
   }
+}
 
-  .svgIcon {
-    width: 15px;
-    height: 15px;
-    fill: colors.$GRAY3;
-    stroke: colors.$WHITE;
-  }
+.svgIcon {
+  width: 15px;
+  height: 15px;
+  fill: colors.$GRAY3;
+  stroke: colors.$WHITE;
+}
+
+.toggleLike {
+  fill: colors.$WHITE;
 }

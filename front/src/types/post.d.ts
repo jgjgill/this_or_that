@@ -11,5 +11,7 @@ export interface IPost {
   createdAt: Date
   updatedAt: Date
   comments: []
+  thisCount: number
+  thatCount: number
   _count: { comments: number; likes: number; voters: number }
 }

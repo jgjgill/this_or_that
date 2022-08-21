@@ -9,6 +9,7 @@ import { ImageModule } from './image/image.module';
 import { VoteModule } from './vote/vote.module';
 import { GoogleOauthModule } from './google-oauth/google-oauth.module';
 import { ConfigModule } from '@nestjs/config';
+import { JwtAuthModule } from './jwt-auth/jwt-auth.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { ConfigModule } from '@nestjs/config';
     ImageModule,
     VoteModule,
     GoogleOauthModule,
+    JwtAuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

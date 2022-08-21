@@ -8,22 +8,14 @@ import { VoteService } from './vote.service';
 export class VoteController {
   constructor(private readonly voteService: VoteService) {}
 
-  @Get(':id')
-  async findPostVotes(@Param('id') postId: string): Promise<any | null> {
-    return this.voteService.findPostVotes(Number(postId));
-  }
-
   @Post()
   @UseGuards(LoggedInGuard)
-  async createPostVote(
-    @Body() postVoteData: Vote,
-    @User() user,
-  ): Promise<Vote> {
-    const { postId, ...newVote } = postVoteData;
+  async createPostVote(@Body() postVoteData, @User() user): Promise<Vote> {
+    const { postId, assignedBy } = postVoteData;
     return this.voteService.createPostVote({
-      ...newVote,
-      post: { connect: { id: postId } },
-      user: { connect: { id: user.id } },
+      postId,
+      userId: user.id,
+      assignedBy,
     });
   }
 }

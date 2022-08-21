@@ -12,8 +12,8 @@ export class PostController {
   }
 
   @Get(':id')
-  async findPost(@Param('id') id: string): Promise<PostData | null> {
-    return this.postService.findPost({ id: Number(id) });
+  async findPost(@Param('id') postId: string): Promise<any | null> {
+    return this.postService.findPost(Number(postId));
   }
 
   @Post()

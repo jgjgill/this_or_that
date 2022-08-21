@@ -15,3 +15,14 @@
     text-decoration: none;
   }
 }
+
+.authButton {
+  padding: 5px;
+  border: 2px solid colors.$GRAY3;
+  border-radius: 10px;
+  transition: 0.2s;
+
+  &:hover {
+    scale: 1.05;
+  }
+}

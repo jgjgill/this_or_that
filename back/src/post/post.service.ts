@@ -26,14 +26,35 @@ export class PostService {
     });
   }
 
-  async findPost(id: Prisma.PostWhereUniqueInput): Promise<Post | null> {
-    return this.prisma.post.findUnique({
-      where: id,
+  async findPost(postId: number): Promise<any | null> {
+    const thisCount = await this.prisma.vote.count({
+      where: {
+        postId,
+        assignedBy: 'this',
+      },
+    });
+
+    const thatCount = await this.prisma.vote.count({
+      where: {
+        postId,
+        assignedBy: 'that',
+      },
+    });
+
+    const postInfo = await this.prisma.post.findUnique({
+      where: { id: postId },
       include: {
         author: { select: { name: true } },
         comments: true,
+        _count: {
+          select: {
+            voters: true,
+          },
+        },
       },
     });
+
+    return { ...postInfo, thisCount, thatCount };
   }
 
   async createPost(postData: Prisma.PostCreateInput): Promise<Post> {

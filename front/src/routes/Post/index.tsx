@@ -2,18 +2,33 @@ import { useQuery } from '@tanstack/react-query'
 import PostComment from 'components/Post/PostComment'
 import PostContent from 'components/Post/PostContent'
 import { useParams } from 'react-router-dom'
-import { getPost } from 'services/api'
+import { getMyPostInfo, getPost } from 'services/api'
 
 const Post = () => {
   const { postId } = useParams()
 
-  const { isLoading, isError, data: postData } = useQuery(['post'], () => getPost(postId!))
+  const { isError: postIsError, data: postData } = useQuery(['post', postId], () => getPost(postId!), {
+    enabled: !!postId,
+  })
+
+  const { isError: myInfoIsError, data: myPostInfoData } = useQuery(
+    ['myPostInfo', postId],
+    () => getMyPostInfo(postId!),
+    {
+      enabled: !!postId,
+      staleTime: Infinity,
+      cacheTime: Infinity,
+    }
+  )
+
+  console.log(postData)
+  console.log(myPostInfoData)
 
   return (
     <div>
-      {postData && (
+      {postData && myPostInfoData && (
         <>
-          <PostContent postContentData={postData} />
+          <PostContent postContentData={postData} myPostInfoData={myPostInfoData!} />
           <PostComment postCommentData={postData.comments} />
         </>
       )}

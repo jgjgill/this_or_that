@@ -3,8 +3,10 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import { AppModule } from './app.module';
 
+import * as cookieParser from 'cookie-parser';
 import * as session from 'express-session';
 import * as passport from 'passport';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -17,12 +19,15 @@ async function bootstrap() {
     prefix: '/uploads',
   });
 
+  app.use(cookieParser());
+
   app.use(
     session({
-      secret: 'session_secret',
+      secret: app.get(ConfigService).get('SESSION_SECRET'),
       saveUninitialized: false,
       resave: false,
-      cookie: { maxAge: 24 * 60 * 60 * 1000 },
+      cookie: { maxAge: 24 * 60 * 60 * 1000, httpOnly: true },
+      // cookie: { httpOnly: true },
     }),
   );
 

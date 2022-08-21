@@ -1,6 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
+import { User } from '@prisma/client';
 import { Profile, Strategy } from 'passport-google-oauth20';
 import { GoogleOauthService } from './google-oauth.service';
 
@@ -8,7 +9,7 @@ import { GoogleOauthService } from './google-oauth.service';
 export class GoogleOauthStrategy extends PassportStrategy(Strategy, 'google') {
   constructor(
     private googleOauthService: GoogleOauthService,
-    configService: ConfigService,
+    private configService: ConfigService,
   ) {
     super({
       clientID: configService.get('GOOGLE_OAUTH_CLIENT_ID'),
@@ -26,9 +27,10 @@ export class GoogleOauthStrategy extends PassportStrategy(Strategy, 'google') {
     const email = profile.emails[0].value;
     const name = profile.displayName;
 
-    // console.log(accessToken);
-    // console.log(refreshToken);
-    const user = await this.googleOauthService.validate({ email, name });
+    const user = await this.googleOauthService.validate({
+      email,
+      name,
+    });
 
     if (!user) {
       throw new UnauthorizedException();
