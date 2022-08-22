@@ -8,10 +8,17 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get('me')
+  async findMyInfo(@User() user: UserType): Promise<UserType> {
+    console.log(user);
+    return this.userService.findMyInfo({ userId: user.id });
+  }
+
+  @Get('me')
   async findMyPostInfo(
     @User() user,
     @Query('postId') postId: string,
   ): Promise<any> {
+    // console.log(user);
     return user
       ? this.userService.findMyPostInfo({ user, postId: Number(postId) })
       : { isLiked: false, isVoted: false };

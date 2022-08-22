@@ -23,7 +23,7 @@ export class GoogleOauthStrategy extends PassportStrategy(Strategy, 'google') {
     accessToken: string,
     refreshToken: string,
     profile: Profile,
-  ): Promise<any> {
+  ): Promise<User> {
     const email = profile.emails[0].value;
     const name = profile.displayName;
 

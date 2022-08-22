@@ -6,14 +6,10 @@ import { Prisma, User } from '@prisma/client';
 export class UserService {
   constructor(private primsa: PrismaService) {}
 
-  async findUser(user: Prisma.UserWhereUniqueInput): Promise<User | null> {
+  async findMyInfo({ userId }) {
     return this.primsa.user.findUnique({
-      where: { id: user.id },
+      where: { id: userId },
     });
-  }
-
-  async createUser(data: Prisma.UserCreateInput): Promise<User> {
-    return this.primsa.user.create({ data });
   }
 
   async findMyPostInfo({ user, postId }) {
@@ -31,6 +27,12 @@ export class UserService {
       }),
     );
 
-    return { isLiked, isVoted };
+    return { userId: user.id, isLiked, isVoted };
+  }
+
+  async findUser(user: Prisma.UserWhereUniqueInput): Promise<User | null> {
+    return this.primsa.user.findUnique({
+      where: { id: user.id },
+    });
   }
 }

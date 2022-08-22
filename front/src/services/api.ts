@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { IImage } from 'types/image'
 import { IPost } from 'types/post'
+import { IUser } from 'types/user'
 
 const url = process.env.REACT_APP_API_URL
 
@@ -23,6 +24,12 @@ axios.defaults.withCredentials = true
 
 // export const getUser = (userId: number): Promise<IUser> => axios.get(`${url}/user/${userId}`).then((res) => res.data)
 
+export const getLogout = () => axios.get(`${url}/auth/google/logout`).then((res) => res.data)
+
+export const getAuthStatus = () => axios.get(`${url}/auth/google/status`).then((res) => res.data)
+
+export const getMyInfo = (): Promise<IUser> => axios.get(`${url}/user/me`).then((res) => res.data)
+
 export const getMyPostInfo = (postId: string): Promise<IMyInfo> =>
   axios.get(`${url}/user/me?postId=${postId}`).then((res) => res.data)
 
@@ -41,5 +48,3 @@ export const postNewThatImage = (newImage: FormData) => axios.post(`${url}/image
 export const postNewPostVote = (newPostVote: INewPostVote) => axios.post(`${url}/vote`, newPostVote)
 
 export const postNewPostLike = (newPostLike: INewPostLike) => axios.post(`${url}/like`, newPostLike)
-
-export const test = () => axios.get(`${url}/auth/google/logout`).then((res) => res.data)

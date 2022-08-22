@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { Vote } from '@prisma/client';
 import { User } from 'src/common/decorators/user.decorator';
-import { LoggedInGuard } from 'src/google-oauth/logged-in.guard';
+import { LoggedInGuard } from 'src/jwt-auth/logged-in.guard';
 import { VoteService } from './vote.service';
 
 @Controller('vote')

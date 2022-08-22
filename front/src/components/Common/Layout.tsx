@@ -1,30 +1,36 @@
 import { useQuery } from '@tanstack/react-query'
+import { useEffect } from 'react'
 import { useCookies } from 'react-cookie'
-import { Link, Outlet } from 'react-router-dom'
-import { getMyPostInfo, test } from 'services/api'
+import { Link, Outlet, useNavigate } from 'react-router-dom'
+import { getMyPostInfo, getLogout, getAuthStatus } from 'services/api'
+import Button from './Button'
 import styles from './layout.module.scss'
 
 const Layout = () => {
-  const {
-    isLoading: myInfoLoading,
-    isError: myInfoIsError,
-    data: myInfoData,
-  } = useQuery(['myInfo'], () => getMyPostInfo('1'), {
+  const { isError: myInfoIsError, data: myInfoData } = useQuery(['myInfo'], () => getMyPostInfo('1'), {
     staleTime: Infinity,
     cacheTime: Infinity,
   })
 
-  const [cookie, setCookie, removeCookie] = useCookies(['jwt'])
+  const [cookie] = useCookies(['jwt'])
+
+  const navigate = useNavigate()
 
   const handleClickLogin = () => {
     window.location.href = process.env.REACT_APP_API_AUTH_GOOGLE_LOGIN_URL!
   }
 
   const handleClickLogout = () => {
-    test()
+    getLogout().then(() => {
+      window.location.reload()
+    })
   }
 
-  // console.log(myInfoData)
+  useEffect(() => {
+    if (!cookie.jwt) return
+
+    getAuthStatus()
+  }, [cookie])
 
   return (
     <div className={styles.layout}>
@@ -36,12 +42,8 @@ const Layout = () => {
         </h1>
       </header>
 
-      <button type='button' onClick={handleClickLogin} className={styles.authButton}>
-        Login
-      </button>
-      <button type='button' onClick={handleClickLogout} className={styles.authButton}>
-        Logout
-      </button>
+      <Button onClick={handleClickLogin} isView={!cookie.jwt} text='Login' />
+      <Button onClick={handleClickLogout} isView={cookie.jwt} text='Logout' />
 
       <main>
         <Outlet />

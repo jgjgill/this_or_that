@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { JwtAuthModule } from 'src/jwt-auth/jwt-auth.module';
+import { JwtAuthStrategy } from 'src/jwt-auth/jwt-auth.strategy';
 import { PrismaService } from 'src/prisma.service';
 import { GoogleOauthController } from './google-oauth.controller';
 import { GoogleOauthService } from './google-oauth.service';
@@ -15,6 +16,7 @@ import { Serializer } from './serializer';
     GoogleOauthStrategy,
     PrismaService,
     Serializer,
+    JwtAuthStrategy,
   ],
 })
 export class GoogleOauthModule {}

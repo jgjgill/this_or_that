@@ -21,7 +21,7 @@ const Post = () => {
     }
   )
 
-  console.log(postData)
+  // console.log(postData)
   console.log(myPostInfoData)
 
   return (

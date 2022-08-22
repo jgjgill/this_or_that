@@ -21,15 +21,7 @@ export class JwtAuthStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  extractJwtFromCookie(req) {
-    let token = null;
-    if (req && req.cookies && req.session) {
-      token = req.cookies['jwt'];
-    }
-    return token;
-  }
-
   async validate(payload) {
-    return { id: payload.sub, username: payload.username };
+    return { id: payload.sub, name: payload.name };
   }
 }
