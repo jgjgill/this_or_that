@@ -7,7 +7,7 @@ import { UserService } from './user.service';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Get('me')
+  @Get('myInfo')
   async findMyInfo(@User() user: UserType): Promise<UserType> {
     console.log(user);
     return this.userService.findMyInfo({ userId: user.id });

@@ -15,7 +15,7 @@ export interface INewPostLike {
 }
 
 export interface IMyInfo {
-  postInfo: any
+  userId: number
   isLiked: boolean
   isVoted: boolean
 }
@@ -28,7 +28,7 @@ export const getLogout = () => axios.get(`${url}/auth/google/logout`).then((res)
 
 export const getAuthStatus = () => axios.get(`${url}/auth/google/status`).then((res) => res.data)
 
-export const getMyInfo = (): Promise<IUser> => axios.get(`${url}/user/me`).then((res) => res.data)
+export const getMyInfo = (): Promise<IUser> => axios.get(`${url}/user/myInfo`).then((res) => res.data)
 
 export const getMyPostInfo = (postId: string): Promise<IMyInfo> =>
   axios.get(`${url}/user/me?postId=${postId}`).then((res) => res.data)

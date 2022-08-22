@@ -4,7 +4,7 @@ import PostItem from './PostItem'
 import styles from './postList.module.scss'
 
 const PostList = () => {
-  const { isLoading, isError, data: postsData } = useQuery(['posts'], getPosts)
+  const { isError, data: postsData } = useQuery(['posts'], getPosts)
 
   return (
     <div className={styles.postsList}>

@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { LikeIcon } from 'assets/svgs'
 import PreviewImage from 'components/Common/PreviewImage'
 import dayjs from 'dayjs'
@@ -13,12 +13,53 @@ interface PostContentProps {
 }
 
 const PostContent = ({ postContentData, myPostInfoData }: PostContentProps) => {
-  const mutationNewPostVote = useMutation((newPostVote: INewPostVote) => {
-    return postNewPostVote(newPostVote)
+  const queryClient = useQueryClient()
+
+  const mutationNewPostVote = useMutation((newPostVote: INewPostVote) => postNewPostVote(newPostVote), {
+    onMutate: async ({ postId, assignedBy }) => {
+      const StringPostId = String(postId)
+
+      const previousMyPostInfo = queryClient.getQueryData<IMyInfo>(['myPostInfo', StringPostId])
+      const previousPost = queryClient.getQueryData<IPost>(['post', StringPostId])
+
+      queryClient.setQueryData(['myPostInfo', StringPostId], {
+        ...previousMyPostInfo,
+        isVoted: true,
+      })
+
+      if (assignedBy === 'this' && previousPost && previousMyPostInfo) {
+        queryClient.setQueryData(['post', StringPostId], {
+          ...previousPost,
+          thisCount: previousPost.thisCount + 1,
+          thatCount: previousMyPostInfo.isVoted ? previousPost.thatCount - 1 : previousPost.thatCount,
+        })
+      }
+
+      if (assignedBy === 'that' && previousPost && previousMyPostInfo) {
+        queryClient.setQueryData(['post', StringPostId], {
+          ...previousPost,
+          thatCount: previousPost.thatCount + 1,
+          thisCount: previousMyPostInfo.isVoted ? previousPost.thisCount - 1 : previousPost.thisCount,
+        })
+      }
+
+      return previousPost
+    },
   })
 
-  const mutationNewPostLike = useMutation((newPostLike: INewPostLike) => {
-    return postNewPostLike(newPostLike)
+  const mutationNewPostLike = useMutation((newPostLike: INewPostLike) => postNewPostLike(newPostLike), {
+    onMutate: async ({ postId }) => {
+      const StringPostId = String(postId)
+
+      const previousLiked = queryClient.getQueryData<IMyInfo>(['myPostInfo', StringPostId])
+
+      queryClient.setQueryData(['myPostInfo', StringPostId], {
+        ...previousLiked,
+        isLiked: !previousLiked?.isLiked,
+      })
+
+      return previousLiked
+    },
   })
 
   const postCreatedAt = dayjs(postContentData.createdAt).format('YYYY-MM-DD')
@@ -73,6 +114,8 @@ const PostContent = ({ postContentData, myPostInfoData }: PostContentProps) => {
           </button>
         </div>
       </div>
+
+      <hr />
 
       <div>
         {myPostInfoData.isVoted && (

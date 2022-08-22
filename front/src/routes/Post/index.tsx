@@ -21,9 +21,6 @@ const Post = () => {
     }
   )
 
-  // console.log(postData)
-  console.log(myPostInfoData)
-
   return (
     <div>
       {postData && myPostInfoData && (
