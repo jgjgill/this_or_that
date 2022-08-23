@@ -35,7 +35,8 @@ export const getProfileInfo = (): Promise<any> => axios.get(`${url}/user/profile
 export const getMyPostInfo = (postId: string): Promise<IMyInfo> =>
   axios.get(`${url}/user/me?postId=${postId}`).then((res) => res.data)
 
-export const getPosts = (): Promise<IPost[]> => axios.get(`${url}/post`).then((res) => res.data)
+export const getPosts = (skip: number): Promise<IPost[]> =>
+  axios.get(`${url}/post?skip=${skip}`).then((res) => res.data)
 
 export const getPost = (postId: string): Promise<IPost> => axios.get(`${url}/post/${postId}`).then((res) => res.data)
 

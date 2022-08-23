@@ -33,7 +33,6 @@ export class UserController {
     @User() user: UserType,
     @Query('postId') postId: string,
   ): Promise<any> {
-    // console.log(user);
     return user
       ? this.userService.findMyPostInfo({ user, postId: Number(postId) })
       : { isLiked: false, isVoted: false };

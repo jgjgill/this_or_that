@@ -34,12 +34,14 @@ const Layout = () => {
         </h1>
       </header>
 
-      <Button onClick={handleClickLogin} isView={!cookie.jwt} text='Login' />
-      <Button onClick={handleClickLogout} isView={cookie.jwt} text='Logout' />
+      <nav className={styles.navBar}>
+        <Button onClick={handleClickLogin} isView={!cookie.jwt} text='Login' />
+        <Button onClick={handleClickLogout} isView={cookie.jwt} text='Logout' />
 
-      <Link to='profile' className={styles.profile}>
-        Profile
-      </Link>
+        <Link to='profile' className={styles.profile}>
+          Profile
+        </Link>
+      </nav>
 
       <main>
         <Outlet />

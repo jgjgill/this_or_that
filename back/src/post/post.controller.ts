@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { Post as PostData } from '@prisma/client';
@@ -16,8 +17,8 @@ export class PostController {
   constructor(private readonly postService: PostService) {}
 
   @Get()
-  async findAllPost(): Promise<PostData[] | null> {
-    return this.postService.findAllPost();
+  async findAllPost(@Query('skip') skip: string): Promise<PostData[] | null> {
+    return this.postService.findAllPost({ skip: Number(skip) });
   }
 
   @Get(':id')

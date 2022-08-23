@@ -28,7 +28,7 @@ const Profile = () => {
 
   return (
     <div className={styles.profileWrapper}>
-      <BasicInfo email={profileInfoData?.email} createdAt={profileInfoData?.createdAt} />
+      <BasicInfo email={profileInfoData?.email} name={profileInfoData?.name} createdAt={profileInfoData?.createdAt} />
       <NicknameForm name={profileInfoData?.name} />
 
       <PostInfoList postsInfoData={profileInfoData?.posts} myPostCount={profileInfoData?._count.posts} />

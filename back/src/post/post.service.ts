@@ -6,7 +6,8 @@ import { PrismaService } from 'src/prisma.service';
 export class PostService {
   constructor(private prisma: PrismaService) {}
 
-  async findAllPost(): Promise<Post[] | null> {
+  async findAllPost({ skip }): Promise<Post[] | null> {
+    console.log(skip);
     return this.prisma.post.findMany({
       include: {
         author: {
@@ -23,6 +24,7 @@ export class PostService {
       orderBy: {
         id: 'desc',
       },
+      take: skip + 5,
     });
   }
 
