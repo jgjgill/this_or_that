@@ -1,12 +1,19 @@
 @use '/src/styles/constants/colors';
 
-.nicknameFormWrapper {
+.basicInfoWrapper {
   display: flex;
+  flex-direction: column;
   gap: 10px;
-}
-
-.submitButton {
   padding: 10px;
   border: 2px solid colors.$GRAY3;
   border-radius: 10px;
+}
+
+.emailWrapper {
+  display: flex;
+  gap: 5px;
+}
+
+.userCreatedAt {
+  text-align: right;
 }

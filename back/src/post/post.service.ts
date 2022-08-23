@@ -60,4 +60,10 @@ export class PostService {
   async createPost(postData: Prisma.PostCreateInput): Promise<Post> {
     return this.prisma.post.create({ data: postData });
   }
+
+  async deletePost(id: Prisma.PostWhereUniqueInput): Promise<Post> {
+    return this.prisma.post.delete({
+      where: id,
+    });
+  }
 }

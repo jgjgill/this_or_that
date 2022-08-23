@@ -24,11 +24,9 @@ export class UserService {
     return this.primsa.user.findUnique({
       where: { id: userId },
       include: {
-        votedPosts: { select: { post: { select: selectedPostInfo } } },
         comments: true,
-        likes: { select: { Post: { select: selectedPostInfo } } },
         posts: { select: selectedPostInfo },
-        _count: true,
+        _count: { select: { posts: true } },
       },
     });
   }

@@ -52,3 +52,5 @@ export const postNewPostVote = (newPostVote: INewPostVote) => axios.post(`${url}
 export const postNewPostLike = (newPostLike: INewPostLike) => axios.post(`${url}/like`, newPostLike)
 
 export const postNewNickname = (newPostName: { name: string }) => axios.post(`${url}/user/name`, newPostName)
+
+export const deletePost = (postId: number) => axios.delete(`${url}/post/${postId}`)

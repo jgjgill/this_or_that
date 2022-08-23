@@ -1,20 +1,37 @@
 import { useQuery } from '@tanstack/react-query'
+import BasicInfo from 'components/Profile/BasicInfo'
 import NicknameForm from 'components/Profile/NicknameForm'
+import PostInfoList from 'components/Profile/PostInfo/PostInfoList'
+import { useEffect } from 'react'
+import { useCookies } from 'react-cookie'
+import { useNavigate } from 'react-router-dom'
 import { getProfileInfo } from 'services/api'
+import styles from './profile.module.scss'
 
 const Profile = () => {
+  const [cookie] = useCookies(['jwt'])
+
   const { isError: myInfoIsError, data: profileInfoData } = useQuery(['profileInfo'], getProfileInfo, {
     staleTime: Infinity,
     cacheTime: Infinity,
   })
 
-  console.log(profileInfoData)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (cookie.jwt) return
+
+    navigate('/', { replace: true })
+  }, [cookie, navigate])
+
+  if (!cookie.jwt) return null
 
   return (
-    <div>
+    <div className={styles.profileWrapper}>
+      <BasicInfo email={profileInfoData?.email} createdAt={profileInfoData?.createdAt} />
       <NicknameForm name={profileInfoData?.name} />
 
-      <div>posts</div>
+      <PostInfoList postsInfoData={profileInfoData?.posts} myPostCount={profileInfoData?._count.posts} />
     </div>
   )
 }

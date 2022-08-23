@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { Post as PostData } from '@prisma/client';
 import { LoggedInGuard } from 'src/jwt-auth/logged-in.guard';
 import { PostService } from './post.service';
@@ -25,5 +33,10 @@ export class PostController {
       ...newPost,
       author: { connect: { id: authorId } },
     });
+  }
+
+  @Delete(':id')
+  async deletePost(@Param('id') postId: string): Promise<PostData> {
+    return this.postService.deletePost({ id: Number(postId) });
   }
 }

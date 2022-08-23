@@ -1,6 +1,15 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { User as UserType } from '@prisma/client';
 import { User } from 'src/common/decorators/user.decorator';
+import { LoggedInGuard } from 'src/jwt-auth/logged-in.guard';
 import { UserService } from './user.service';
 
 @Controller('user')
@@ -13,6 +22,7 @@ export class UserController {
   }
 
   @Get('profileInfo')
+  @UseGuards(LoggedInGuard)
   async findProfileInfo(@User() user: UserType): Promise<UserType> {
     console.log(user);
     return this.userService.findProfileInfo({ userId: user.id });

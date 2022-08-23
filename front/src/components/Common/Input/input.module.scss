@@ -1,6 +1,7 @@
 @use '/src/styles/constants/colors';
 
 .input {
+  width: 100%;
   padding: 10px;
   border: 2px solid colors.$GRAY3;
   border-radius: 10px;

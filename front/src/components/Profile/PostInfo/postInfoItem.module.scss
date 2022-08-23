@@ -1,0 +1,62 @@
+@use '/src/styles/constants/colors';
+
+.postInfoItemWrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 2px solid colors.$GRAY3;
+  border-radius: 10px;
+  transition: 0.3s;
+
+  &:hover {
+    scale: 1.01;
+  }
+}
+
+.removeButton {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  z-index: 10;
+  transition: 0.3s;
+
+  &:hover {
+    scale: 1.05;
+  }
+}
+
+.linkWrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 10px;
+  color: colors.$GRAY3;
+}
+
+.title {
+  margin: 0 auto;
+  font-size: x-large;
+}
+
+.contentWrapper {
+  display: flex;
+  justify-content: space-around;
+}
+
+.descriptionText {
+  margin: auto 0;
+}
+
+.svgIcon {
+  width: 20px;
+  height: 20px;
+  fill: colors.$WHITE;
+  stroke: colors.$GRAY3;
+  transition: 0.3s;
+
+  &:hover {
+    fill: colors.$GRAY3;
+    stroke: colors.$WHITE;
+  }
+}

@@ -12,7 +12,7 @@ import { store } from './states'
 
 import './styles/index.scss'
 
-const queryClient = new QueryClient()
+export const queryClient = new QueryClient()
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(

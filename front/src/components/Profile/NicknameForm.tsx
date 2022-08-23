@@ -1,5 +1,6 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import Input from 'components/Common/Input'
+import { queryClient } from 'index'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { postNewNickname } from 'services/api'
 import styles from './nicknameForm.module.scss'
@@ -9,9 +10,7 @@ interface NicknameFormProps {
 }
 
 const NicknameForm = ({ name }: NicknameFormProps) => {
-  const { register, handleSubmit, formState, reset } = useForm<NicknameFormProps>()
-
-  const queryClient = useQueryClient()
+  const { register, handleSubmit, reset } = useForm<NicknameFormProps>()
 
   const mutationNewName = useMutation((newName: { name: string }) => postNewNickname(newName), {
     onMutate: async (data) => {
@@ -26,6 +25,9 @@ const NicknameForm = ({ name }: NicknameFormProps) => {
 
       return previousName
     },
+    onSettled: () => {
+      queryClient.invalidateQueries(['profileInfo'])
+    },
   })
 
   const formValid: SubmitHandler<NicknameFormProps> = (data) => {
@@ -34,8 +36,9 @@ const NicknameForm = ({ name }: NicknameFormProps) => {
   }
 
   return (
-    <form onSubmit={handleSubmit(formValid)}>
+    <form onSubmit={handleSubmit(formValid)} className={styles.nicknameFormWrapper}>
       <Input placeholder={name} register={register('name', { required: true })} />
+
       <button type='submit' className={styles.submitButton}>
         Save
       </button>

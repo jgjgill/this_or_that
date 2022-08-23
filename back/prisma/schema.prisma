@@ -43,7 +43,7 @@ model Like {
   id         Int      @id @default(autoincrement())
   User       User     @relation(fields: [likeUserId], references: [id])
   likeUserId Int
-  Post       Post     @relation(fields: [likePostId], references: [id])
+  Post       Post     @relation(fields: [likePostId], references: [id], onDelete: Cascade)
   likePostId Int
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
@@ -54,7 +54,7 @@ model Comment {
   content       String
   User          User     @relation(fields: [commentUserId], references: [id])
   commentUserId Int
-  Post          Post     @relation(fields: [commentPostId], references: [id])
+  Post          Post     @relation(fields: [commentPostId], references: [id], onDelete: Cascade)
   commentPostId Int
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
@@ -68,7 +68,7 @@ model Image {
 }
 
 model Vote {
-  post       Post     @relation(fields: [postId], references: [id])
+  post       Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId     Int
   user       User     @relation(fields: [userId], references: [id])
   userId     Int

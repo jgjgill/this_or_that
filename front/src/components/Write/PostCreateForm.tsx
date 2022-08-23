@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
 import Input from 'components/Common/Input'
 import { useAppSelector } from 'hooks/useAppSelector'
+import { queryClient } from 'index'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { getMyInfo, postNewPost, postNewThatImage, postNewThisImage } from 'services/api'
@@ -17,8 +18,11 @@ const PostCreateForm = () => {
 
   const { register, handleSubmit, formState } = useForm<IPost>()
 
-  const mutationNewPost = useMutation((newPost: IPost) => {
-    return postNewPost(newPost)
+  const mutationNewPost = useMutation((newPost: IPost) => postNewPost(newPost), {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['posts'])
+      queryClient.invalidateQueries(['profileInfo'])
+    },
   })
 
   const thisImageData = useAppSelector(getThisImage)
@@ -34,6 +38,7 @@ const PostCreateForm = () => {
       authorId: myInfoData?.id!,
     })
     navigate('/', { replace: true })
+    window.scrollTo(0, 0)
   }
 
   return (

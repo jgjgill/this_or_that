@@ -1,7 +1,7 @@
-import { ChangeEvent, DragEvent, useEffect, useState } from 'react'
+import { DragEvent, useEffect, useState } from 'react'
 import { FormState, UseFormRegister } from 'react-hook-form'
 import { IPost } from 'types/post'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { AxiosResponse } from 'axios'
 import { useAppDispatch } from 'hooks/useAppDispatch'
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit'
@@ -9,6 +9,7 @@ import { getLastImage } from 'services/api'
 import { IImage } from 'types/image'
 import Input from 'components/Common/Input'
 import { cx } from 'styles'
+import { queryClient } from 'index'
 import styles from './createImage.module.scss'
 import PreviewImage from '../../Common/PreviewImage'
 
@@ -25,13 +26,7 @@ const CreateImage = ({ register, formState, postNewImage, setImagePath, imageDat
   const [dragOver, setDragOver] = useState(false)
   const [isDrop, setIsDrop] = useState(false)
 
-  const queryClient = useQueryClient()
-
-  const {
-    isLoading,
-    isError,
-    data: previewImageData,
-  } = useQuery([`${inputImage}Image`, isDrop], getLastImage, {
+  const { isError, data: previewImageData } = useQuery([`${inputImage}Image`, isDrop], getLastImage, {
     enabled: isDrop,
     staleTime: Infinity,
     initialData: null,

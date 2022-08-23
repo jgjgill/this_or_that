@@ -1,7 +1,8 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { LikeIcon } from 'assets/svgs'
 import PreviewImage from 'components/Common/PreviewImage'
 import dayjs from 'dayjs'
+import { queryClient } from 'index'
 import { IMyInfo, INewPostLike, INewPostVote, postNewPostLike, postNewPostVote } from 'services/api'
 import { cx } from 'styles'
 import { IPost } from 'types/post'
@@ -13,11 +14,9 @@ interface PostContentProps {
 }
 
 const PostContent = ({ postContentData, myPostInfoData }: PostContentProps) => {
-  const queryClient = useQueryClient()
-
   const mutationNewPostVote = useMutation((newPostVote: INewPostVote) => postNewPostVote(newPostVote), {
     onMutate: async ({ postId, assignedBy }) => {
-      const StringPostId = String(postId)
+      const StringPostId: String = String(postId)
 
       const previousMyPostInfo = queryClient.getQueryData<IMyInfo>(['myPostInfo', StringPostId])
       const previousPost = queryClient.getQueryData<IPost>(['post', StringPostId])
@@ -45,6 +44,10 @@ const PostContent = ({ postContentData, myPostInfoData }: PostContentProps) => {
 
       return previousPost
     },
+    onSettled: () => {
+      queryClient.invalidateQueries(['post'])
+      queryClient.invalidateQueries(['myPostInfo'])
+    },
   })
 
   const mutationNewPostLike = useMutation((newPostLike: INewPostLike) => postNewPostLike(newPostLike), {
@@ -60,28 +63,23 @@ const PostContent = ({ postContentData, myPostInfoData }: PostContentProps) => {
 
       return previousLiked
     },
+    onSettled: () => {
+      queryClient.invalidateQueries(['myPostInfo'])
+    },
   })
 
   const postCreatedAt = dayjs(postContentData.createdAt).format('YYYY-MM-DD')
 
   const handleClickThis = () => {
-    mutationNewPostVote.mutate({
-      postId: postContentData.id,
-      assignedBy: 'this',
-    })
+    mutationNewPostVote.mutate({ postId: postContentData.id, assignedBy: 'this' })
   }
 
   const handleClickThat = () => {
-    mutationNewPostVote.mutate({
-      postId: postContentData.id,
-      assignedBy: 'that',
-    })
+    mutationNewPostVote.mutate({ postId: postContentData.id, assignedBy: 'that' })
   }
 
   const handleClickLike = () => {
-    mutationNewPostLike.mutate({
-      postId: postContentData.id,
-    })
+    mutationNewPostLike.mutate({ postId: postContentData.id })
   }
 
   return (
