@@ -5,7 +5,7 @@ import styles from './input.module.scss'
 interface InputProps {
   placeholder: string
   register: UseFormRegisterReturn
-  error: FieldError | undefined
+  error?: FieldError
 }
 
 const Input = ({ placeholder, register, error }: InputProps) => {

@@ -30,6 +30,8 @@ export const getAuthStatus = () => axios.get(`${url}/auth/google/status`).then((
 
 export const getMyInfo = (): Promise<IUser> => axios.get(`${url}/user/myInfo`).then((res) => res.data)
 
+export const getProfileInfo = (): Promise<any> => axios.get(`${url}/user/profileInfo`).then((res) => res.data)
+
 export const getMyPostInfo = (postId: string): Promise<IMyInfo> =>
   axios.get(`${url}/user/me?postId=${postId}`).then((res) => res.data)
 
@@ -48,3 +50,5 @@ export const postNewThatImage = (newImage: FormData) => axios.post(`${url}/image
 export const postNewPostVote = (newPostVote: INewPostVote) => axios.post(`${url}/vote`, newPostVote)
 
 export const postNewPostLike = (newPostLike: INewPostLike) => axios.post(`${url}/like`, newPostLike)
+
+export const postNewNickname = (newPostName: { name: string }) => axios.post(`${url}/user/name`, newPostName)

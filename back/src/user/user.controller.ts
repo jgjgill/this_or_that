@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { User as UserType } from '@prisma/client';
 import { User } from 'src/common/decorators/user.decorator';
 import { UserService } from './user.service';
@@ -6,16 +6,21 @@ import { UserService } from './user.service';
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
-
   @Get('myInfo')
   async findMyInfo(@User() user: UserType): Promise<UserType> {
     console.log(user);
     return this.userService.findMyInfo({ userId: user.id });
   }
 
+  @Get('profileInfo')
+  async findProfileInfo(@User() user: UserType): Promise<UserType> {
+    console.log(user);
+    return this.userService.findProfileInfo({ userId: user.id });
+  }
+
   @Get('me')
   async findMyPostInfo(
-    @User() user,
+    @User() user: UserType,
     @Query('postId') postId: string,
   ): Promise<any> {
     // console.log(user);
@@ -27,5 +32,10 @@ export class UserController {
   @Get(':id')
   async findUser(@Param('id') id: string): Promise<UserType | null> {
     return this.userService.findUser({ id: Number(id) });
+  }
+
+  @Post('name')
+  async changeName(@User() user: UserType, @Body() body) {
+    return this.userService.changeName({ userId: user.id, newName: body.name });
   }
 }

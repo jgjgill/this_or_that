@@ -1,20 +1,12 @@
-import { useQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
 import { useCookies } from 'react-cookie'
-import { Link, Outlet, useNavigate } from 'react-router-dom'
-import { getMyPostInfo, getLogout, getAuthStatus } from 'services/api'
+import { Link, Outlet } from 'react-router-dom'
+import { getLogout, getAuthStatus } from 'services/api'
 import Button from './Button'
 import styles from './layout.module.scss'
 
 const Layout = () => {
-  const { isError: myInfoIsError, data: myInfoData } = useQuery(['myInfo'], () => getMyPostInfo('1'), {
-    staleTime: Infinity,
-    cacheTime: Infinity,
-  })
-
   const [cookie] = useCookies(['jwt'])
-
-  const navigate = useNavigate()
 
   const handleClickLogin = () => {
     window.location.href = process.env.REACT_APP_API_AUTH_GOOGLE_LOGIN_URL!
@@ -44,6 +36,10 @@ const Layout = () => {
 
       <Button onClick={handleClickLogin} isView={!cookie.jwt} text='Login' />
       <Button onClick={handleClickLogout} isView={cookie.jwt} text='Logout' />
+
+      <Link to='profile' className={styles.profile}>
+        Profile
+      </Link>
 
       <main>
         <Outlet />
