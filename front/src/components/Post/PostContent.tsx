@@ -3,7 +3,8 @@ import { LikeIcon } from 'assets/svgs'
 import PreviewImage from 'components/Common/PreviewImage'
 import dayjs from 'dayjs'
 import { queryClient } from 'index'
-import { IMyInfo, INewPostLike, INewPostVote, postNewPostLike, postNewPostVote } from 'services/api'
+import { useEffect, useState } from 'react'
+import { IMyInfo, INewLike, INewPostVote, postNewPostLike, postNewPostVote } from 'services/api'
 import { cx } from 'styles'
 import { IPost } from 'types/post'
 import styles from './postContent.module.scss'
@@ -14,6 +15,8 @@ interface PostContentProps {
 }
 
 const PostContent = ({ postContentData, myPostInfoData }: PostContentProps) => {
+  const [likeText, setLikeText] = useState('Like')
+
   const mutationNewPostVote = useMutation((newPostVote: INewPostVote) => postNewPostVote(newPostVote), {
     onMutate: async ({ postId, assignedBy }) => {
       const StringPostId: String = String(postId)
@@ -50,16 +53,13 @@ const PostContent = ({ postContentData, myPostInfoData }: PostContentProps) => {
     },
   })
 
-  const mutationNewPostLike = useMutation((newPostLike: INewPostLike) => postNewPostLike(newPostLike), {
+  const mutationNewPostLike = useMutation((newPostLike: INewLike) => postNewPostLike(newPostLike), {
     onMutate: async ({ postId }) => {
       const StringPostId = String(postId)
 
       const previousLiked = queryClient.getQueryData<IMyInfo>(['myPostInfo', StringPostId])
 
-      queryClient.setQueryData(['myPostInfo', StringPostId], {
-        ...previousLiked,
-        isLiked: !previousLiked?.isLiked,
-      })
+      queryClient.setQueryData(['myPostInfo', StringPostId], { ...previousLiked, isLiked: !previousLiked?.isLiked })
 
       return previousLiked
     },
@@ -81,6 +81,10 @@ const PostContent = ({ postContentData, myPostInfoData }: PostContentProps) => {
   const handleClickLike = () => {
     mutationNewPostLike.mutate({ postId: postContentData.id })
   }
+
+  useEffect(() => {
+    myPostInfoData.isLiked ? setLikeText('UnLike') : setLikeText('Like')
+  }, [myPostInfoData.isLiked])
 
   return (
     <div className={styles.postContentWrapper}>
@@ -137,8 +141,7 @@ const PostContent = ({ postContentData, myPostInfoData }: PostContentProps) => {
 
       <button type='button' onClick={handleClickLike} className={styles.likeButton}>
         <LikeIcon className={cx(styles.svgIcon, { [styles.toggleLike]: myPostInfoData.isLiked })} />
-        <span>{myPostInfoData.isLiked && 'UnLike'}</span>
-        <span>{!myPostInfoData.isLiked && 'Like'}</span>
+        <span className={styles.likeText}>{likeText}</span>
       </button>
     </div>
   )

@@ -1,0 +1,57 @@
+@use '/src/styles/constants/colors';
+
+.temp {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 10px;
+  border-bottom: 2px solid colors.$WHITE;
+}
+
+.commentUserInfoWrapper {
+  display: flex;
+  gap: 10px;
+  justify-content: space-around;
+}
+
+.likeButton {
+  display: flex;
+  gap: 1px;
+  align-items: center;
+  padding: 3px;
+  color: colors.$WHITE;
+  border: 2px solid colors.$WHITE;
+  border-radius: 10px;
+  transition: 0.3s;
+
+  &:hover {
+    scale: 1.05;
+  }
+
+  .likeText {
+    width: 40px;
+  }
+}
+
+.likeCountWrapper {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  margin-right: auto;
+
+  .liekCountText {
+    font-size: small;
+  }
+}
+
+.svgIcon {
+  width: 10px;
+  height: 10px;
+  fill: colors.$GRAY3;
+  stroke: colors.$WHITE;
+  transition: 0.3s;
+}
+
+.toggleLike {
+  fill: colors.$WHITE;
+}

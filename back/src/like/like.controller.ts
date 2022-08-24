@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, Query } from '@nestjs/common';
 import { User } from 'src/common/decorators/user.decorator';
 import { LikeService } from './like.service';
 
@@ -11,5 +11,13 @@ export class LikeController {
     const { postId } = body;
 
     return this.likeService.updatePostLike({ postId, userId: user.id });
+  }
+
+  @Post('comment')
+  async updateCommentLike(@Query('commentId') commentId: string, @User() user) {
+    return this.likeService.updateCommentLike({
+      commentId: Number(commentId),
+      userId: user.id,
+    });
   }
 }

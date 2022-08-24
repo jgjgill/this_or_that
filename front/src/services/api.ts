@@ -10,7 +10,7 @@ export interface INewPostVote {
   assignedBy: 'this' | 'that'
 }
 
-export interface INewPostLike {
+export interface INewLike {
   postId: number
 }
 
@@ -18,6 +18,7 @@ export interface IMyInfo {
   userId: number
   isLiked: boolean
   isVoted: boolean
+  commentIsLikedArray: { isLiked: boolean }[]
 }
 
 axios.defaults.withCredentials = true
@@ -50,8 +51,13 @@ export const postNewThatImage = (newImage: FormData) => axios.post(`${url}/image
 
 export const postNewPostVote = (newPostVote: INewPostVote) => axios.post(`${url}/vote`, newPostVote)
 
-export const postNewPostLike = (newPostLike: INewPostLike) => axios.post(`${url}/like`, newPostLike)
+export const postNewPostLike = (newPostLike: INewLike) => axios.post(`${url}/like`, newPostLike)
 
 export const postNewNickname = (newPostName: { name: string }) => axios.post(`${url}/user/name`, newPostName)
+
+export const postNewComment = (newComment: string, postId: string) =>
+  axios.post(`${url}/comment?postId=${postId}`, newComment)
+
+export const postNewCommentLike = (commentId: string) => axios.post(`${url}/like/comment?commentId=${commentId}`)
 
 export const deletePost = (postId: number) => axios.delete(`${url}/post/${postId}`)

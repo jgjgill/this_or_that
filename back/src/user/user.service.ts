@@ -46,7 +46,18 @@ export class UserService {
       }),
     );
 
-    return { userId: user.id, isLiked, isVoted };
+    const commets = await this.primsa.comment.findMany({
+      where: { commentPostId: postId },
+      select: { CommentLike: { select: { likeUserId: true } } },
+    });
+
+    const commentIsLikedArray = commets.map((item) => ({
+      isLiked: Boolean(
+        item.CommentLike.find((test) => test.likeUserId === user.id),
+      ),
+    }));
+
+    return { userId: user.id, isLiked, isVoted, commentIsLikedArray };
   }
 
   async findUser(user: Prisma.UserWhereUniqueInput): Promise<User | null> {

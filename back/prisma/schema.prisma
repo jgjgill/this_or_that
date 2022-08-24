@@ -11,15 +11,16 @@ datasource db {
 }
 
 model User {
-  id         Int       @id @default(autoincrement())
-  email      String    @unique
-  name       String?
-  posts      Post[]
-  likes      Like[]
-  comments   Comment[]
-  votedPosts Vote[]
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
+  id           Int           @id @default(autoincrement())
+  email        String        @unique
+  name         String?
+  posts        Post[]
+  likes        Like[]
+  commentLikes CommentLike[]
+  comments     Comment[]
+  votedPosts   Vote[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
 }
 
 model Post {
@@ -49,15 +50,26 @@ model Like {
   updatedAt  DateTime @updatedAt
 }
 
-model Comment {
+model CommentLike {
   id            Int      @id @default(autoincrement())
-  content       String
-  User          User     @relation(fields: [commentUserId], references: [id])
-  commentUserId Int
-  Post          Post     @relation(fields: [commentPostId], references: [id], onDelete: Cascade)
-  commentPostId Int
+  User          User     @relation(fields: [likeUserId], references: [id])
+  likeUserId    Int
+  Comment       Comment  @relation(fields: [likeCommentId], references: [id], onDelete: Cascade)
+  likeCommentId Int
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+}
+
+model Comment {
+  id            Int           @id @default(autoincrement())
+  content       String
+  CommentLike   CommentLike[]
+  User          User          @relation(fields: [commentUserId], references: [id])
+  commentUserId Int
+  Post          Post          @relation(fields: [commentPostId], references: [id], onDelete: Cascade)
+  commentPostId Int
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
 }
 
 model Image {

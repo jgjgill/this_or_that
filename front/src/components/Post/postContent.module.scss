@@ -61,6 +61,7 @@
 .likeButton {
   display: flex;
   gap: 5px;
+  align-items: center;
   padding: 10px;
   margin-top: auto;
   margin-right: auto;
@@ -72,6 +73,10 @@
   &:hover {
     scale: 1.05;
   }
+
+  .likeText {
+    width: 40px;
+  }
 }
 
 .svgIcon {
@@ -79,6 +84,7 @@
   height: 15px;
   fill: colors.$GRAY3;
   stroke: colors.$WHITE;
+  transition: 0.3s;
 }
 
 .toggleLike {

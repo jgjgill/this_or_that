@@ -1,8 +1,10 @@
 import { useQuery } from '@tanstack/react-query'
-import PostComment from 'components/Post/PostComment'
+import PostCommentForm from 'components/Post/PostCommentForm'
+import PostCommentList from 'components/Post/PostCommentList'
 import PostContent from 'components/Post/PostContent'
 import { useParams } from 'react-router-dom'
 import { getMyPostInfo, getPost } from 'services/api'
+import styles from './post.module.scss'
 
 const Post = () => {
   const { postId } = useParams()
@@ -14,19 +16,19 @@ const Post = () => {
   const { isError: myInfoIsError, data: myPostInfoData } = useQuery(
     ['myPostInfo', postId],
     () => getMyPostInfo(postId!),
-    {
-      enabled: !!postId,
-      staleTime: Infinity,
-      cacheTime: Infinity,
-    }
+    { enabled: !!postId, staleTime: Infinity, cacheTime: Infinity }
   )
 
   return (
-    <div>
+    <div className={styles.postWrapper}>
       {postData && myPostInfoData && (
         <>
           <PostContent postContentData={postData} myPostInfoData={myPostInfoData!} />
-          <PostComment postCommentData={postData.comments} />
+          <PostCommentForm postId={postData.id} />
+          <PostCommentList
+            postCommentsData={postData.comments}
+            commentIsLikedArray={myPostInfoData.commentIsLikedArray}
+          />
         </>
       )}
     </div>

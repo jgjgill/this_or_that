@@ -10,20 +10,10 @@ export class PostService {
     console.log(skip);
     return this.prisma.post.findMany({
       include: {
-        author: {
-          select: {
-            name: true,
-          },
-        },
-
-        _count: {
-          select: { comments: true, likes: true, voters: true },
-        },
+        author: { select: { name: true } },
+        _count: { select: { comments: true, likes: true, voters: true } },
       },
-
-      orderBy: {
-        id: 'desc',
-      },
+      orderBy: { id: 'desc' },
       take: skip + 5,
     });
   }
@@ -47,12 +37,13 @@ export class PostService {
       where: { id: postId },
       include: {
         author: { select: { name: true } },
-        comments: true,
-        _count: {
-          select: {
-            voters: true,
+        comments: {
+          include: {
+            User: { select: { name: true } },
+            _count: { select: { CommentLike: true } },
           },
         },
+        _count: { select: { voters: true } },
       },
     });
 

@@ -25,4 +25,25 @@ export class LikeService {
       });
     }
   }
+
+  async updateCommentLike({ commentId, userId }) {
+    const alreadyExists = await this.prisma.commentLike.findFirst({
+      where: { likeCommentId: commentId, likeUserId: userId },
+    });
+
+    if (alreadyExists) {
+      await this.prisma.commentLike.delete({
+        where: { id: alreadyExists.id },
+      });
+    }
+
+    if (!alreadyExists) {
+      await this.prisma.commentLike.create({
+        data: {
+          User: { connect: { id: userId } },
+          Comment: { connect: { id: commentId } },
+        },
+      });
+    }
+  }
 }
