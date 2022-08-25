@@ -69,14 +69,20 @@ const PostContent = ({ postContentData, myPostInfoData }: PostContentProps) => {
   })
 
   const handleClickThis = () => {
+    if (!myPostInfoData.userId) return
+
     mutationNewPostVote.mutate({ postId: postContentData.id, assignedBy: 'this' })
   }
 
   const handleClickThat = () => {
+    if (!myPostInfoData.userId) return
+
     mutationNewPostVote.mutate({ postId: postContentData.id, assignedBy: 'that' })
   }
 
   const handleClickLike = () => {
+    if (!myPostInfoData.userId) return
+
     mutationNewPostLike.mutate({ postId: postContentData.id })
   }
 

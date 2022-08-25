@@ -3,6 +3,7 @@ import {
   Get,
   Post,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -11,6 +12,7 @@ import { diskStorage } from 'multer';
 import * as fs from 'fs';
 import * as path from 'path';
 import { Image } from '@prisma/client';
+import { LoggedInGuard } from 'src/jwt-auth/logged-in.guard';
 
 try {
   fs.readdirSync('uploads');
@@ -22,6 +24,7 @@ try {
 }
 
 @Controller('image')
+@UseGuards(LoggedInGuard)
 export class ImageController {
   constructor(private readonly imageService: ImageService) {}
 

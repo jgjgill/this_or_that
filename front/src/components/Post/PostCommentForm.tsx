@@ -6,14 +6,17 @@ import styles from './postCommentForm.module.scss'
 
 interface PostCommentProps {
   postId: string
+  userId?: number
 }
 
-const PostCommentForm = ({ postId }: PostCommentProps) => {
+const PostCommentForm = ({ postId, userId }: PostCommentProps) => {
   const { register, handleSubmit, reset } = useForm<{ comment: string }>()
 
   const mutationNewComment = useMutation((newComment: any) => postNewComment(newComment, postId))
 
   const formValid: SubmitHandler<{ comment: string }> = (data) => {
+    if (!userId) return
+
     mutationNewComment.mutate({ comment: data.comment })
 
     reset()

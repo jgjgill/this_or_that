@@ -12,11 +12,11 @@ import { LoggedInGuard } from 'src/jwt-auth/logged-in.guard';
 import { CommentService } from './comment.service';
 
 @Controller('comment')
+@UseGuards(LoggedInGuard)
 export class CommentController {
   constructor(private readonly commentService: CommentService) {}
 
   @Post()
-  @UseGuards(LoggedInGuard)
   async createComment(
     @Query('postId') postId: string,
     @Body() data,

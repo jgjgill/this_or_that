@@ -20,9 +20,10 @@ interface PostReCommentItemProps {
     updatedAt: Date
   }
   isLiked: boolean
+  userId?: number
 }
 
-const PostReCommentItem = ({ postReCommentData, isLiked }: PostReCommentItemProps) => {
+const PostReCommentItem = ({ postReCommentData, isLiked, userId }: PostReCommentItemProps) => {
   const [likeText, setLikeText] = useState('Like')
 
   const { postId } = useParams()
@@ -35,6 +36,8 @@ const PostReCommentItem = ({ postReCommentData, isLiked }: PostReCommentItemProp
   })
 
   const handleClickLike = () => {
+    if (!userId) return
+
     mutationNewReCommentLike.mutate()
   }
 

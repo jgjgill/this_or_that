@@ -1,8 +1,10 @@
-import { Body, Controller, Post, Query } from '@nestjs/common';
+import { Body, Controller, Post, Query, UseGuards } from '@nestjs/common';
 import { User } from 'src/common/decorators/user.decorator';
+import { LoggedInGuard } from 'src/jwt-auth/logged-in.guard';
 import { LikeService } from './like.service';
 
 @Controller('like')
+@UseGuards(LoggedInGuard)
 export class LikeController {
   constructor(private readonly likeService: LikeService) {}
 

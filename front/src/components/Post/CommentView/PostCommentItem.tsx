@@ -6,7 +6,7 @@ import { useAppSelector } from 'hooks/useAppSelector'
 import { queryClient } from 'index'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { getMyReCommentInfo, postNewCommentLike } from 'services/api'
+import { getMyPostInfo, getMyReCommentInfo, postNewCommentLike } from 'services/api'
 import { getReCommentModalValue, setToggleReCommentModal } from 'states/reCommentModalData'
 import { cx } from 'styles'
 import styles from './postCommentItem.module.scss'
@@ -55,6 +55,12 @@ const PostCommentItem = ({ postCommentData, isLiked }: PostCommentItemProps) => 
     }
   )
 
+  const { isError: myInfoIsError, data: myPostInfoData } = useQuery(
+    ['myPostInfo', postId],
+    () => getMyPostInfo(postId!),
+    { enabled: !!postId, staleTime: Infinity, cacheTime: Infinity }
+  )
+
   const mutationNewCommentLike = useMutation((commentId: string) => postNewCommentLike(commentId), {
     onSettled: () => {
       queryClient.invalidateQueries(['myPostInfo', postId])
@@ -63,10 +69,14 @@ const PostCommentItem = ({ postCommentData, isLiked }: PostCommentItemProps) => 
   })
 
   const handleClickLike = () => {
+    if (!myPostInfoData?.userId) return
+
     mutationNewCommentLike.mutate(String(postCommentData.id))
   }
 
   const handleClickReComment = () => {
+    if (!myPostInfoData?.userId) return
+
     dispatch(setToggleReCommentModal({ commentId: postCommentData.id }))
   }
 
@@ -109,6 +119,7 @@ const PostCommentItem = ({ postCommentData, isLiked }: PostCommentItemProps) => 
           key={item.id}
           postReCommentData={item}
           isLiked={myRecommentInfoData.reCommentIsLikedArray[index]?.isLiked || false}
+          userId={myPostInfoData?.userId}
         />
       ))}
 

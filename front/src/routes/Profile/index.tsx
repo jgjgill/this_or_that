@@ -11,7 +11,8 @@ import styles from './profile.module.scss'
 const Profile = () => {
   const [cookie] = useCookies(['jwt'])
 
-  const { isError: myInfoIsError, data: profileInfoData } = useQuery(['profileInfo'], getProfileInfo, {
+  const { isError: myInfoIsError, data: profileInfoData } = useQuery(['profileInfo', cookie], getProfileInfo, {
+    enabled: Boolean(cookie.jwt),
     staleTime: Infinity,
     cacheTime: Infinity,
   })

@@ -16,8 +16,8 @@ import { UserService } from './user.service';
 export class UserController {
   constructor(private readonly userService: UserService) {}
   @Get('myInfo')
+  @UseGuards(LoggedInGuard)
   async findMyInfo(@User() user: UserType): Promise<UserType> {
-    console.log(user);
     return this.userService.findMyInfo({ userId: user.id });
   }
 
@@ -55,6 +55,7 @@ export class UserController {
   }
 
   @Post('name')
+  @UseGuards(LoggedInGuard)
   async changeName(@User() user: UserType, @Body() body) {
     return this.userService.changeName({ userId: user.id, newName: body.name });
   }

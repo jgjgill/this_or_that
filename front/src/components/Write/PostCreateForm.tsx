@@ -20,8 +20,11 @@ const PostCreateForm = () => {
 
   const mutationNewPost = useMutation((newPost: IPost) => postNewPost(newPost), {
     onSuccess: () => {
-      queryClient.invalidateQueries(['posts'])
+      queryClient.resetQueries(['posts'])
       queryClient.invalidateQueries(['profileInfo'])
+
+      navigate('/', { replace: true })
+      window.scrollTo(0, 0)
     },
   })
 
@@ -37,8 +40,6 @@ const PostCreateForm = () => {
       thatImagePath: thatImageData?.imagePath,
       authorId: myInfoData?.id!,
     })
-    navigate('/', { replace: true })
-    window.scrollTo(0, 0)
   }
 
   return (

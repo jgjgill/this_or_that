@@ -18,6 +18,7 @@ interface PostInfoItemProps {
 const PostInfoItem = ({ postInfoData }: PostInfoItemProps) => {
   const mutationDeletePost = useMutation((postId: number) => deletePost(postId), {
     onSuccess: () => {
+      queryClient.resetQueries(['posts'])
       queryClient.invalidateQueries(['profileInfo'])
     },
   })

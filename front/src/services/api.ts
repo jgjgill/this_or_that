@@ -15,7 +15,7 @@ export interface INewLike {
 }
 
 export interface IMyInfo {
-  userId: number
+  userId?: number
   isLiked: boolean
   isVoted: boolean
   commentIsLikedArray: { isLiked: boolean }[]
