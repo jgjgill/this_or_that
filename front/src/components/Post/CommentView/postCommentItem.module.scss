@@ -1,14 +1,13 @@
 @use '/src/styles/constants/colors';
 
-.temp {
+.commentWrapper {
   display: flex;
   flex-direction: column;
   gap: 20px;
   padding: 10px;
-  border-bottom: 2px solid colors.$WHITE;
 }
 
-.commentUserInfoWrapper {
+.commentBottomWrapper {
   display: flex;
   gap: 10px;
   justify-content: space-around;
@@ -37,11 +36,39 @@
   display: flex;
   gap: 5px;
   align-items: center;
-  margin-right: auto;
 
   .liekCountText {
     font-size: small;
   }
+}
+
+.reCommentButton {
+  display: flex;
+  align-items: center;
+  margin-right: auto;
+  transition: 0.3s;
+
+  &:hover {
+    scale: 1.05;
+  }
+}
+
+.reCommentIcon {
+  width: 20px;
+  height: 20px;
+  fill: colors.$WHITE;
+  stroke: colors.$GRAY3;
+  transition: 0.3s;
+
+  &:hover {
+    fill: colors.$GRAY3;
+    stroke: colors.$WHITE;
+  }
+}
+
+.isViewModalIcon {
+  fill: colors.$GRAY3;
+  stroke: colors.$WHITE;
 }
 
 .svgIcon {

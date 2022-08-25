@@ -10,7 +10,7 @@ const PostCommentList = ({ postCommentsData, commentIsLikedArray }: PostCommentL
   return (
     <ul className={styles.postCommentsList}>
       {postCommentsData.map((item, index) => (
-        <PostCommentItem key={item.id} postCommentData={item} isLiked={commentIsLikedArray[index].isLiked} />
+        <PostCommentItem key={item.id} postCommentData={item} isLiked={commentIsLikedArray[index]?.isLiked || false} />
       ))}
     </ul>
   )

@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
+import PostCommentList from 'components/Post/CommentView/PostCommentList'
 import PostCommentForm from 'components/Post/PostCommentForm'
-import PostCommentList from 'components/Post/PostCommentList'
 import PostContent from 'components/Post/PostContent'
 import { useParams } from 'react-router-dom'
 import { getMyPostInfo, getPost } from 'services/api'

@@ -42,6 +42,7 @@ export class ImageController {
           cb(null, path.basename(file.originalname, ext) + Date.now() + ext);
         },
       }),
+      limits: { fieldSize: 5 * 1024 * 1024 },
     }),
   )
   async createThisImage(@UploadedFile() file: Express.Multer.File) {
@@ -68,6 +69,7 @@ export class ImageController {
           cb(null, path.basename(file.originalname, ext) + Date.now() + ext);
         },
       }),
+      limits: { fieldSize: 5 * 1024 * 1024 },
     }),
   )
   async createThatImage(@UploadedFile() file: Express.Multer.File) {

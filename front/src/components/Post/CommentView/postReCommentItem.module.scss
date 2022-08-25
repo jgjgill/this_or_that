@@ -1,0 +1,73 @@
+@use '/src/styles/constants/colors';
+
+.reCommentWrapper {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 10px;
+}
+
+.rightArrowIcon {
+  width: 20px;
+  height: 20px;
+  fill: colors.$WHITE;
+  stroke: colors.$GRAY3;
+}
+
+.reCommentContent {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  padding: 10px;
+  border: 2px solid colors.$WHITE;
+  border-radius: 10px;
+}
+
+.reCommentBottomWrapper {
+  display: flex;
+  gap: 10px;
+  justify-content: space-around;
+}
+
+.likeButton {
+  display: flex;
+  gap: 1px;
+  align-items: center;
+  padding: 3px;
+  color: colors.$WHITE;
+  border: 2px solid colors.$WHITE;
+  border-radius: 10px;
+  transition: 0.3s;
+
+  &:hover {
+    scale: 1.05;
+  }
+
+  .likeText {
+    width: 40px;
+  }
+}
+
+.likeCountWrapper {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  margin-right: auto;
+
+  .liekCountText {
+    font-size: small;
+  }
+}
+
+.svgIcon {
+  width: 10px;
+  height: 10px;
+  fill: colors.$GRAY3;
+  stroke: colors.$WHITE;
+  transition: 0.3s;
+}
+
+.toggleLike {
+  fill: colors.$WHITE;
+}

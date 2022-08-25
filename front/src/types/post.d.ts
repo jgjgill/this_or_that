@@ -22,5 +22,5 @@ export interface IPost {
   }[]
   thisCount: number
   thatCount: number
-  _count: { comments: number; likes: number; voters: number }
+  _count: { comments: number; likes: number; voters: number; ReComment: number }
 }

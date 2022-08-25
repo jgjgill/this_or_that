@@ -6,8 +6,7 @@ export class CommentService {
   constructor(private prisma: PrismaService) {}
 
   async createComment({ postId, comment, userId }) {
-    // console.log(postId, text);
-    await this.prisma.comment.create({
+    return this.prisma.comment.create({
       data: {
         commentPostId: postId,
         commentUserId: userId,

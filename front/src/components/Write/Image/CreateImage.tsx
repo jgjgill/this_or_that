@@ -11,7 +11,7 @@ import Input from 'components/Common/Input'
 import { cx } from 'styles'
 import { queryClient } from 'index'
 import styles from './createImage.module.scss'
-import PreviewImage from '../../Common/PreviewImage'
+import PreviewImage from '../../Common/Etc/PreviewImage'
 
 interface CreateImageProps {
   register: UseFormRegister<IPost>

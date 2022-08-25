@@ -7,11 +7,17 @@ export class PostService {
   constructor(private prisma: PrismaService) {}
 
   async findAllPost({ skip }): Promise<Post[] | null> {
-    console.log(skip);
     return this.prisma.post.findMany({
       include: {
         author: { select: { name: true } },
-        _count: { select: { comments: true, likes: true, voters: true } },
+        _count: {
+          select: {
+            comments: true,
+            likes: true,
+            voters: true,
+            ReComment: true,
+          },
+        },
       },
       orderBy: { id: 'desc' },
       take: skip + 5,
@@ -40,6 +46,12 @@ export class PostService {
         comments: {
           include: {
             User: { select: { name: true } },
+            ReComment: {
+              include: {
+                User: { select: { name: true } },
+                _count: { select: { ReCommentLike: true } },
+              },
+            },
             _count: { select: { CommentLike: true } },
           },
         },

@@ -10,6 +10,7 @@ import { VoteModule } from './vote/vote.module';
 import { GoogleOauthModule } from './google-oauth/google-oauth.module';
 import { ConfigModule } from '@nestjs/config';
 import { JwtAuthModule } from './jwt-auth/jwt-auth.module';
+import { RecommentModule } from './recomment/recomment.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { JwtAuthModule } from './jwt-auth/jwt-auth.module';
     VoteModule,
     GoogleOauthModule,
     JwtAuthModule,
+    RecommentModule,
   ],
   controllers: [AppController],
   providers: [AppService],

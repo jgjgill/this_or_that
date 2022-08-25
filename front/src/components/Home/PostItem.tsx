@@ -1,6 +1,6 @@
 import { CommentIcon, LikeIcon, VoteIcon } from 'assets/svgs'
-import PreviewImage from 'components/Common/PreviewImage'
-import dayjs from 'dayjs'
+import CreatedAtText from 'components/Common/Etc/CreatedAtText'
+import PreviewImage from 'components/Common/Etc/PreviewImage'
 import { useNavigate } from 'react-router-dom'
 import { IPost } from 'types/post'
 import styles from './postItem.module.scss'
@@ -11,8 +11,6 @@ interface PostItemProps {
 
 const PostItem = ({ postData }: PostItemProps) => {
   const navigate = useNavigate()
-
-  const postCreatedAt = dayjs(postData.createdAt).format('YYYY-MM-DD')
 
   const handleClick = () => {
     navigate(`/post/${postData.id}`)
@@ -50,12 +48,12 @@ const PostItem = ({ postData }: PostItemProps) => {
 
           <div className={styles.countWrapper}>
             <CommentIcon className={styles.svgIcon} />
-            <span>댓글 {postData._count.comments}개</span>
+            <span>댓글 {postData._count.comments + postData._count.ReComment}개</span>
           </div>
         </div>
 
         <div className={styles.uploadInfo}>
-          <time dateTime={postCreatedAt}>{postCreatedAt}</time>
+          <CreatedAtText dateTime={postData.createdAt} />
           <span>{postData.author.name}</span>
         </div>
       </div>

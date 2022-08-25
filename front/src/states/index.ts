@@ -1,9 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
 
 import imageData from './imageData'
+import reCommentModalData from './reCommentModalData'
 
 export const store = configureStore({
-  reducer: { imageData },
+  reducer: { imageData, reCommentModalData },
   devTools: process.env.NODE_ENV !== 'production',
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }),
 })

@@ -20,4 +20,15 @@ export class LikeController {
       userId: user.id,
     });
   }
+
+  @Post('reComment')
+  async updateReCommentLike(
+    @Query('reCommentId') reCommentId: string,
+    @User() user,
+  ) {
+    return this.likeService.updateReCommentLike({
+      reCommentId: Number(reCommentId),
+      userId: user.id,
+    });
+  }
 }

@@ -35,7 +35,18 @@ export class UserController {
   ): Promise<any> {
     return user
       ? this.userService.findMyPostInfo({ user, postId: Number(postId) })
-      : { isLiked: false, isVoted: false, commentIsLikedArray: null };
+      : { isLiked: false, isVoted: false, commentIsLikedArray: [] };
+  }
+
+  @Get('me/recomment')
+  async findMyReCommentInfo(
+    @User() user: UserType,
+    @Query('commentId') commentId: string,
+  ): Promise<any> {
+    const NumCommentId = Number(commentId);
+    return user
+      ? this.userService.findMyReCommentInfo({ user, commentId: NumCommentId })
+      : { reCommentIsLikedArray: [] };
   }
 
   @Get(':id')

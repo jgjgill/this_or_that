@@ -36,6 +36,9 @@ export const getProfileInfo = (): Promise<any> => axios.get(`${url}/user/profile
 export const getMyPostInfo = (postId: string): Promise<IMyInfo> =>
   axios.get(`${url}/user/me?postId=${postId}`).then((res) => res.data)
 
+export const getMyReCommentInfo = (commentId: number): Promise<any> =>
+  axios.get(`${url}/user/me/recomment?commentId=${commentId}`).then((res) => res.data)
+
 export const getPosts = (skip: number): Promise<IPost[]> =>
   axios.get(`${url}/post?skip=${skip}`).then((res) => res.data)
 
@@ -58,6 +61,12 @@ export const postNewNickname = (newPostName: { name: string }) => axios.post(`${
 export const postNewComment = (newComment: string, postId: string) =>
   axios.post(`${url}/comment?postId=${postId}`, newComment)
 
+export const postNewReComment = (newReComment: string, postId: string, commentId: number) =>
+  axios.post(`${url}/recomment?postId=${postId}&commentId=${commentId}`, newReComment)
+
 export const postNewCommentLike = (commentId: string) => axios.post(`${url}/like/comment?commentId=${commentId}`)
+
+export const postNewReCommentLike = (reCommentId: number) =>
+  axios.post(`${url}/like/recomment?reCommentId=${reCommentId}`)
 
 export const deletePost = (postId: number) => axios.delete(`${url}/post/${postId}`)

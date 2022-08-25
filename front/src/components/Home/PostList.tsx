@@ -12,10 +12,10 @@ const PostList = () => {
   const { isError, data: postsData } = useQuery(['posts'], () => getPosts(skip), { enabled: inView })
 
   useEffect(() => {
-    if (!inView) return
+    if (!postsData) return
 
     setSkip((prev) => prev + 5)
-  }, [inView])
+  }, [postsData])
 
   return (
     <div className={styles.postsList}>

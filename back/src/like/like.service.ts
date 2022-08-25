@@ -46,4 +46,25 @@ export class LikeService {
       });
     }
   }
+
+  async updateReCommentLike({ reCommentId, userId }) {
+    const alreadyExists = await this.prisma.reCommentLike.findFirst({
+      where: { likeReCommentId: reCommentId, likeUserId: userId },
+    });
+
+    if (alreadyExists) {
+      await this.prisma.reCommentLike.delete({
+        where: { id: alreadyExists.id },
+      });
+    }
+
+    if (!alreadyExists) {
+      await this.prisma.reCommentLike.create({
+        data: {
+          User: { connect: { id: userId } },
+          ReComment: { connect: { id: reCommentId } },
+        },
+      });
+    }
+  }
 }

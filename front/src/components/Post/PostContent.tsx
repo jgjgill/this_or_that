@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query'
 import { LikeIcon } from 'assets/svgs'
-import PreviewImage from 'components/Common/PreviewImage'
-import dayjs from 'dayjs'
+import CreatedAtText from 'components/Common/Etc/CreatedAtText'
+import PreviewImage from 'components/Common/Etc/PreviewImage'
 import { queryClient } from 'index'
 import { useEffect, useState } from 'react'
 import { IMyInfo, INewLike, INewPostVote, postNewPostLike, postNewPostVote } from 'services/api'
@@ -68,8 +68,6 @@ const PostContent = ({ postContentData, myPostInfoData }: PostContentProps) => {
     },
   })
 
-  const postCreatedAt = dayjs(postContentData.createdAt).format('YYYY-MM-DD')
-
   const handleClickThis = () => {
     mutationNewPostVote.mutate({ postId: postContentData.id, assignedBy: 'this' })
   }
@@ -94,7 +92,7 @@ const PostContent = ({ postContentData, myPostInfoData }: PostContentProps) => {
           <div>{postContentData.author.name}</div>
         </div>
 
-        <time dateTime={postCreatedAt}>{postCreatedAt}</time>
+        <CreatedAtText dateTime={postContentData.createdAt} />
       </div>
 
       <div className={styles.postWrapper}>

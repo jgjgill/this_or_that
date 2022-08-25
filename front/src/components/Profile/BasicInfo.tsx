@@ -1,15 +1,13 @@
-import dayjs from 'dayjs'
+import CreatedAtText from 'components/Common/Etc/CreatedAtText'
 import styles from './basicInfo.module.scss'
 
 interface BasicInfoProps {
   email: string
   name: string
-  createdAt: string
+  createdAt: Date
 }
 
 const BasicInfo = ({ email, name, createdAt }: BasicInfoProps) => {
-  const UserCreatedAt = dayjs(createdAt).format('YYYY-MM-DD')
-
   return (
     <div className={styles.basicInfoWrapper}>
       <dl className={styles.contentWrapper}>
@@ -21,10 +19,7 @@ const BasicInfo = ({ email, name, createdAt }: BasicInfoProps) => {
         <dt>Name</dt>
         <dd>{name}</dd>
       </dl>
-
-      <time dateTime={UserCreatedAt} className={styles.userCreatedAt}>
-        {UserCreatedAt}
-      </time>
+      <CreatedAtText dateTime={createdAt} />
     </div>
   )
 }
