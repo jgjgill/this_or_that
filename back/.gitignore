@@ -2,7 +2,7 @@
 this-or-that.pem
 
 # compiled output
-/dist
+# /dist
 /node_modules
 /uploads
 
