@@ -12,7 +12,6 @@ const PostList = () => {
   const { isError, data: postsData } = useQuery(['posts'], () => getPosts(skip), {
     enabled: inView,
   })
-  console.log(postsData)
 
   useEffect(() => {
     if (!postsData) return

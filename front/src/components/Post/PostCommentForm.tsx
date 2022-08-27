@@ -1,18 +1,27 @@
 import { useMutation } from '@tanstack/react-query'
 import Input from 'components/Common/Input'
+import { queryClient } from 'index'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { postNewComment } from 'services/api'
 import styles from './postCommentForm.module.scss'
 
 interface PostCommentProps {
-  postId: string
+  postId: number
   userId?: number
 }
 
 const PostCommentForm = ({ postId, userId }: PostCommentProps) => {
   const { register, handleSubmit, reset } = useForm<{ comment: string }>()
 
-  const mutationNewComment = useMutation((newComment: any) => postNewComment(newComment, postId))
+  const mutationNewComment = useMutation((newComment: any) => postNewComment(newComment, String(postId)), {
+    onSettled: () => {
+      queryClient.invalidateQueries(['post', String(postId)]).then(() => {
+        setTimeout(() => {
+          window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
+        }, 0)
+      })
+    },
+  })
 
   const formValid: SubmitHandler<{ comment: string }> = (data) => {
     if (!userId) return
