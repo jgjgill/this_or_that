@@ -26,7 +26,7 @@ const Post = () => {
       {postData && myPostInfoData && (
         <>
           <PostContent postContentData={postData} myPostInfoData={myPostInfoData!} />
-          <PostCommentForm postId={postData.id} userId={myPostInfoData.userId} />
+          <PostCommentForm postId={postData.id} />
           <PostCommentList
             postCommentsData={postData.comments}
             commentIsLikedArray={myPostInfoData.commentIsLikedArray}

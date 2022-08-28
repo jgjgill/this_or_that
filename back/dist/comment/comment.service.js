@@ -16,14 +16,8 @@ let CommentService = class CommentService {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    async createComment({ postId, comment, userId }) {
-        return this.prisma.comment.create({
-            data: {
-                commentPostId: postId,
-                commentUserId: userId,
-                content: comment,
-            },
-        });
+    async createComment(data) {
+        return this.prisma.comment.create({ data });
     }
     async deleteComment() { }
 };

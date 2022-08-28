@@ -58,8 +58,8 @@ export const postNewPostLike = (newPostLike: INewLike) => axios.post(`${url}/lik
 
 export const postNewNickname = (newPostName: { name: string }) => axios.post(`${url}/user/name`, newPostName)
 
-export const postNewComment = (newComment: string, postId: string) =>
-  axios.post(`${url}/comment?postId=${postId}`, newComment)
+export const postNewComment = (commentData: { comment: string }, postId: number) =>
+  axios.post(`${url}/comment?postId=${postId}`, commentData)
 
 export const postNewReComment = (newReComment: string, postId: string, commentId: number) =>
   axios.post(`${url}/recomment?postId=${postId}&commentId=${commentId}`, newReComment)

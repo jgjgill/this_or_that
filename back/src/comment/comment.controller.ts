@@ -2,11 +2,12 @@ import {
   Body,
   Controller,
   Delete,
+  ParseIntPipe,
   Post,
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { User as UserData } from '@prisma/client';
+import { Comment, User as UserData } from '@prisma/client';
 import { User } from 'src/common/decorators/user.decorator';
 import { LoggedInGuard } from 'src/jwt-auth/logged-in.guard';
 import { CommentService } from './comment.service';
@@ -18,14 +19,14 @@ export class CommentController {
 
   @Post()
   async createComment(
-    @Query('postId') postId: string,
-    @Body() data,
+    @Query('postId', ParseIntPipe) postId: number,
+    @Body() commentData: { comment: string },
     @User() user: UserData,
-  ) {
+  ): Promise<Comment> {
     return this.commentService.createComment({
-      postId: Number(postId),
-      comment: data.comment,
-      userId: user.id,
+      Post: { connect: { id: postId } },
+      User: { connect: { id: user.id } },
+      content: commentData.comment,
     });
   }
 

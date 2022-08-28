@@ -21,11 +21,11 @@ let CommentController = class CommentController {
     constructor(commentService) {
         this.commentService = commentService;
     }
-    async createComment(postId, data, user) {
+    async createComment(postId, commentData, user) {
         return this.commentService.createComment({
-            postId: Number(postId),
-            comment: data.comment,
-            userId: user.id,
+            Post: { connect: { id: postId } },
+            User: { connect: { id: user.id } },
+            content: commentData.comment,
         });
     }
     async deleteComment() {
@@ -34,11 +34,11 @@ let CommentController = class CommentController {
 };
 __decorate([
     (0, common_1.Post)(),
-    __param(0, (0, common_1.Query)('postId')),
+    __param(0, (0, common_1.Query)('postId', common_1.ParseIntPipe)),
     __param(1, (0, common_1.Body)()),
     __param(2, (0, user_decorator_1.User)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object, Object]),
+    __metadata("design:paramtypes", [Number, Object, Object]),
     __metadata("design:returntype", Promise)
 ], CommentController.prototype, "createComment", null);
 __decorate([
