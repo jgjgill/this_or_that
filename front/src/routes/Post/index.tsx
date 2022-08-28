@@ -11,6 +11,8 @@ const Post = () => {
 
   const { isError: postIsError, data: postData } = useQuery(['post', postId], () => getPost(postId!), {
     enabled: !!postId,
+    staleTime: Infinity,
+    cacheTime: Infinity,
   })
 
   const { isError: myInfoIsError, data: myPostInfoData } = useQuery(

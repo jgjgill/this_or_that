@@ -37,6 +37,7 @@ export class PostController {
   }
 
   @Delete(':id')
+  @UseGuards(LoggedInGuard)
   async deletePost(@Param('id') postId: string): Promise<PostData> {
     return this.postService.deletePost({ id: Number(postId) });
   }

@@ -5,6 +5,7 @@ import { useAppDispatch } from 'hooks/useAppDispatch'
 import { useAppSelector } from 'hooks/useAppSelector'
 import { queryClient } from 'index'
 import { useEffect, useState } from 'react'
+import { useCookies } from 'react-cookie'
 import { useParams } from 'react-router-dom'
 import { getMyPostInfo, getMyReCommentInfo, postNewCommentLike } from 'services/api'
 import { getReCommentModalValue, setToggleReCommentModal } from 'states/reCommentModalData'
@@ -37,6 +38,8 @@ interface PostCommentItemProps {
 }
 
 const PostCommentItem = ({ postCommentData, isLiked }: PostCommentItemProps) => {
+  const [cookie] = useCookies(['jwt'])
+
   const [likeText, setLikeText] = useState('Like')
 
   const { postId } = useParams()
@@ -69,13 +72,13 @@ const PostCommentItem = ({ postCommentData, isLiked }: PostCommentItemProps) => 
   })
 
   const handleClickLike = () => {
-    if (!myPostInfoData?.userId) return
+    if (!cookie.jwt) throw new Error('Login Error')
 
     mutationNewCommentLike.mutate(String(postCommentData.id))
   }
 
   const handleClickReComment = () => {
-    if (!myPostInfoData?.userId) return
+    if (!cookie.jwt) throw new Error('Login Error')
 
     dispatch(setToggleReCommentModal({ commentId: postCommentData.id }))
   }

@@ -46,7 +46,7 @@ const PostReCommentItem = ({ postReCommentData, isLiked, userId }: PostReComment
   }, [isLiked])
 
   return (
-    <li className={styles.reCommentWrapper}>
+    <li className={cx(styles.reCommentWrapper, styles.reCommentWrapper + String(postReCommentData.id))}>
       <RightArrowIcon className={styles.rightArrowIcon} />
       <div className={styles.reCommentContent}>
         <span>{postReCommentData.content}</span>

@@ -24,9 +24,24 @@ const ReCommentFormModal = ({ isView, commentId }: ReCommentFormModalProps) => {
 
   const dispatch = useAppDispatch()
 
+  const scrollToCommentId = (reCommentId: number) => {
+    const comment = document.body.querySelector<HTMLDivElement>(
+      `.postReCommentItem_reCommentWrapper__Eqmbo${reCommentId}`
+    )
+    if (!comment) return
+
+    comment.scrollIntoView({ behavior: 'smooth' })
+  }
+
   const mutationNewComment = useMutation((newReComment: any) => postNewReComment(newReComment, postId!, commentId), {
-    onSettled: () => {
+    onSettled: (data) => {
+      if (!data) return
+
       queryClient.invalidateQueries(['post', postId])
+
+      setTimeout(() => {
+        scrollToCommentId(data.data.id)
+      }, 50)
     },
   })
 
