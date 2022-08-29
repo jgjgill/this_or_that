@@ -20,6 +20,7 @@ const multer_1 = require("multer");
 const fs = require("fs");
 const path = require("path");
 const logged_in_guard_1 = require("../jwt-auth/logged-in.guard");
+const swagger_1 = require("@nestjs/swagger");
 try {
     fs.readdirSync('uploads');
 }
@@ -38,27 +39,23 @@ let ImageController = class ImageController {
     }
     async createThisImage(file) {
         const imagePath = file.path;
-        const createdAt = new Date();
-        const updatedAt = new Date();
         return this.imageService.createThisImage({
             imagePath,
-            createdAt,
-            updatedAt,
         });
     }
     async createThatImage(file) {
         const imagePath = file.path;
-        const createdAt = new Date();
-        const updatedAt = new Date();
         return this.imageService.createThatImage({
             imagePath,
-            createdAt,
-            updatedAt,
         });
     }
 };
 __decorate([
     (0, common_1.Get)('-1'),
+    (0, swagger_1.ApiOperation)({
+        summary: '등록 이미지 가져오기',
+        description: '사용자가 마지막으로 등록한 이미지 불러오기',
+    }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
@@ -77,6 +74,10 @@ __decorate([
         }),
         limits: { fieldSize: 5 * 1024 * 1024 },
     })),
+    (0, swagger_1.ApiOperation)({
+        summary: 'This Image 생성',
+        description: 'This Image 저장',
+    }),
     __param(0, (0, common_1.UploadedFile)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -96,6 +97,10 @@ __decorate([
         }),
         limits: { fieldSize: 5 * 1024 * 1024 },
     })),
+    (0, swagger_1.ApiOperation)({
+        summary: 'That Image 생성',
+        description: 'That Image 저장',
+    }),
     __param(0, (0, common_1.UploadedFile)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -104,6 +109,7 @@ __decorate([
 ImageController = __decorate([
     (0, common_1.Controller)('image'),
     (0, common_1.UseGuards)(logged_in_guard_1.LoggedInGuard),
+    (0, swagger_1.ApiTags)('이미지'),
     __metadata("design:paramtypes", [image_service_1.ImageService])
 ], ImageController);
 exports.ImageController = ImageController;

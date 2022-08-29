@@ -19,6 +19,7 @@ const jwt_auth_guard_1 = require("../jwt-auth/jwt-auth.guard");
 const jwt_auth_service_1 = require("../jwt-auth/jwt-auth.service");
 const google_oauth_guard_1 = require("./google-oauth.guard");
 const logged_in_guard_1 = require("../jwt-auth/logged-in.guard");
+const swagger_1 = require("@nestjs/swagger");
 let GoogleOauthController = class GoogleOauthController {
     constructor(jwtAuthService, configService) {
         this.jwtAuthService = jwtAuthService;
@@ -86,6 +87,7 @@ __decorate([
 ], GoogleOauthController.prototype, "user", null);
 GoogleOauthController = __decorate([
     (0, common_1.Controller)('auth/google'),
+    (0, swagger_1.ApiTags)('인증'),
     __metadata("design:paramtypes", [jwt_auth_service_1.JwtAuthService,
         config_1.ConfigService])
 ], GoogleOauthController);

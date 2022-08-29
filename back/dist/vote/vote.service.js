@@ -16,7 +16,7 @@ let VoteService = class VoteService {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    async createPostVote({ postId, userId, assignedBy }) {
+    async createPostVote({ postId, userId, assignedBy, }) {
         return this.prisma.vote.upsert({
             where: { postId_userId: { postId, userId } },
             create: { postId, userId, assignedBy },

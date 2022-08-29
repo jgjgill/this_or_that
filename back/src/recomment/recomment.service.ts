@@ -1,18 +1,12 @@
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
 export class RecommentService {
   constructor(private prisma: PrismaService) {}
 
-  async createReComment({ postId, commentId, comment, userId }) {
-    return this.prisma.reComment.create({
-      data: {
-        reCommentPostId: postId,
-        reCommentCommentId: commentId,
-        reCommentUserId: userId,
-        content: comment,
-      },
-    });
+  async createReComment(data: Prisma.ReCommentCreateInput) {
+    return this.prisma.reComment.create({ data });
   }
 }

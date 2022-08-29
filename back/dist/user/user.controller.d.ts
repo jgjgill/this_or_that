@@ -5,8 +5,10 @@ export declare class UserController {
     constructor(userService: UserService);
     findMyInfo(user: UserType): Promise<UserType>;
     findProfileInfo(user: UserType): Promise<UserType>;
-    findMyPostInfo(user: UserType, postId: string): Promise<any>;
-    findMyReCommentInfo(user: UserType, commentId: string): Promise<any>;
-    findUser(id: string): Promise<UserType | null>;
-    changeName(user: UserType, body: any): Promise<UserType>;
+    findMyPostInfo(user: UserType, postId: number): Promise<any>;
+    findMyReCommentInfo(user: UserType, commentId: number): Promise<any>;
+    findUser(id: number): Promise<UserType | null>;
+    changeName(user: UserType, body: {
+        name: string;
+    }): Promise<UserType>;
 }

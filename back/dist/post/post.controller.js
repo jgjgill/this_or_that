@@ -25,6 +25,7 @@ var __rest = (this && this.__rest) || function (s, e) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PostController = void 0;
 const common_1 = require("@nestjs/common");
+const swagger_1 = require("@nestjs/swagger");
 const logged_in_guard_1 = require("../jwt-auth/logged-in.guard");
 const post_service_1 = require("./post.service");
 let PostController = class PostController {
@@ -32,36 +33,44 @@ let PostController = class PostController {
         this.postService = postService;
     }
     async findAllPost(skip) {
-        return this.postService.findAllPost({ skip: Number(skip) });
+        return this.postService.findAllPost({ skip: skip });
     }
     async findPost(postId) {
-        return this.postService.findPost(Number(postId));
+        return this.postService.findPost(postId);
     }
     async createPost(post) {
         const { authorId } = post, newPost = __rest(post, ["authorId"]);
         return this.postService.createPost(Object.assign(Object.assign({}, newPost), { author: { connect: { id: authorId } } }));
     }
     async deletePost(postId) {
-        return this.postService.deletePost({ id: Number(postId) });
+        return this.postService.deletePost({ id: postId });
     }
 };
 __decorate([
     (0, common_1.Get)(),
-    __param(0, (0, common_1.Query)('skip')),
+    (0, swagger_1.ApiOperation)({
+        summary: '전체 게시판',
+        description: '모든 게시판 불러오기(무한 스크롤)',
+    }),
+    (0, swagger_1.ApiQuery)({ name: 'skip', example: 5, required: true }),
+    __param(0, (0, common_1.Query)('skip', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], PostController.prototype, "findAllPost", null);
 __decorate([
     (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, swagger_1.ApiOperation)({ summary: '특정 게시판', description: '특정 게시판 불러오기' }),
+    (0, swagger_1.ApiParam)({ name: 'id', example: 1, required: true }),
+    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], PostController.prototype, "findPost", null);
 __decorate([
     (0, common_1.Post)(),
     (0, common_1.UseGuards)(logged_in_guard_1.LoggedInGuard),
+    (0, swagger_1.ApiOperation)({ summary: '게시판 생성', description: '게시판 생성하기' }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -70,13 +79,16 @@ __decorate([
 __decorate([
     (0, common_1.Delete)(':id'),
     (0, common_1.UseGuards)(logged_in_guard_1.LoggedInGuard),
-    __param(0, (0, common_1.Param)('id')),
+    (0, swagger_1.ApiOperation)({ summary: '게시판 삭제', description: '게시판 삭제하기' }),
+    (0, swagger_1.ApiParam)({ name: 'id', example: 1, required: true }),
+    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], PostController.prototype, "deletePost", null);
 PostController = __decorate([
     (0, common_1.Controller)('post'),
+    (0, swagger_1.ApiTags)('게시판'),
     __metadata("design:paramtypes", [post_service_1.PostService])
 ], PostController);
 exports.PostController = PostController;

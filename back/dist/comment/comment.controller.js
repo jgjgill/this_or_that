@@ -14,9 +14,11 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CommentController = void 0;
 const common_1 = require("@nestjs/common");
+const swagger_1 = require("@nestjs/swagger");
 const user_decorator_1 = require("../common/decorators/user.decorator");
 const logged_in_guard_1 = require("../jwt-auth/logged-in.guard");
 const comment_service_1 = require("./comment.service");
+const create_comment_dto_1 = require("./dto/create-comment.dto");
 let CommentController = class CommentController {
     constructor(commentService) {
         this.commentService = commentService;
@@ -34,11 +36,17 @@ let CommentController = class CommentController {
 };
 __decorate([
     (0, common_1.Post)(),
+    (0, swagger_1.ApiOperation)({ summary: '댓글 추가 기능', description: '댓글 생성' }),
+    (0, swagger_1.ApiQuery)({
+        name: 'postId',
+        example: 1,
+        required: true,
+    }),
     __param(0, (0, common_1.Query)('postId', common_1.ParseIntPipe)),
     __param(1, (0, common_1.Body)()),
     __param(2, (0, user_decorator_1.User)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, Object, Object]),
+    __metadata("design:paramtypes", [Number, create_comment_dto_1.CreateCommentDto, Object]),
     __metadata("design:returntype", Promise)
 ], CommentController.prototype, "createComment", null);
 __decorate([
@@ -50,6 +58,7 @@ __decorate([
 CommentController = __decorate([
     (0, common_1.Controller)('comment'),
     (0, common_1.UseGuards)(logged_in_guard_1.LoggedInGuard),
+    (0, swagger_1.ApiTags)('댓글'),
     __metadata("design:paramtypes", [comment_service_1.CommentService])
 ], CommentController);
 exports.CommentController = CommentController;

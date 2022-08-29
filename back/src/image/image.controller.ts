@@ -13,6 +13,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { Image } from '@prisma/client';
 import { LoggedInGuard } from 'src/jwt-auth/logged-in.guard';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 try {
   fs.readdirSync('uploads');
@@ -25,10 +26,15 @@ try {
 
 @Controller('image')
 @UseGuards(LoggedInGuard)
+@ApiTags('이미지')
 export class ImageController {
   constructor(private readonly imageService: ImageService) {}
 
   @Get('-1')
+  @ApiOperation({
+    summary: '등록 이미지 가져오기',
+    description: '사용자가 마지막으로 등록한 이미지 불러오기',
+  })
   async findLastImage(): Promise<Image> {
     return this.imageService.findLastImage();
   }
@@ -48,15 +54,15 @@ export class ImageController {
       limits: { fieldSize: 5 * 1024 * 1024 },
     }),
   )
+  @ApiOperation({
+    summary: 'This Image 생성',
+    description: 'This Image 저장',
+  })
   async createThisImage(@UploadedFile() file: Express.Multer.File) {
     const imagePath = file.path;
-    const createdAt = new Date();
-    const updatedAt = new Date();
 
     return this.imageService.createThisImage({
       imagePath,
-      createdAt,
-      updatedAt,
     });
   }
 
@@ -75,15 +81,15 @@ export class ImageController {
       limits: { fieldSize: 5 * 1024 * 1024 },
     }),
   )
+  @ApiOperation({
+    summary: 'That Image 생성',
+    description: 'That Image 저장',
+  })
   async createThatImage(@UploadedFile() file: Express.Multer.File) {
     const imagePath = file.path;
-    const createdAt = new Date();
-    const updatedAt = new Date();
 
     return this.imageService.createThatImage({
       imagePath,
-      createdAt,
-      updatedAt,
     });
   }
 }

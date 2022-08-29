@@ -16,15 +16,8 @@ let RecommentService = class RecommentService {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    async createReComment({ postId, commentId, comment, userId }) {
-        return this.prisma.reComment.create({
-            data: {
-                reCommentPostId: postId,
-                reCommentCommentId: commentId,
-                reCommentUserId: userId,
-                content: comment,
-            },
-        });
+    async createReComment(data) {
+        return this.prisma.reComment.create({ data });
     }
 };
 RecommentService = __decorate([

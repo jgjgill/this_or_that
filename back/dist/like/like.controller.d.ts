@@ -1,10 +1,10 @@
+import { CommentLike, Like, ReCommentLike } from '@prisma/client';
+import { TogglePostLikeDto } from './dto/toggle-like-dto';
 import { LikeService } from './like.service';
 export declare class LikeController {
     private readonly likeService;
     constructor(likeService: LikeService);
-    updatePostLike(body: {
-        postId: number;
-    }, user: any): Promise<void>;
-    updateCommentLike(commentId: string, user: any): Promise<void>;
-    updateReCommentLike(reCommentId: string, user: any): Promise<void>;
+    updatePostLike(postData: TogglePostLikeDto, user: any): Promise<Like>;
+    updateCommentLike(commentId: number, user: any): Promise<CommentLike>;
+    updateReCommentLike(reCommentId: number, user: any): Promise<ReCommentLike>;
 }

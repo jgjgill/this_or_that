@@ -16,9 +16,9 @@ let UserService = class UserService {
     constructor(primsa) {
         this.primsa = primsa;
     }
-    async findMyInfo({ userId }) {
+    async findMyInfo(userWhereUniqueInput) {
         return this.primsa.user.findUnique({
-            where: { id: userId },
+            where: userWhereUniqueInput,
         });
     }
     async findProfileInfo({ userId }) {
@@ -38,13 +38,13 @@ let UserService = class UserService {
             },
         });
     }
-    async findMyPostInfo({ user, postId }) {
+    async findMyPostInfo({ userId, postId }) {
         const isLiked = Boolean(await this.primsa.like.findFirst({
-            where: { likeUserId: user.id, likePostId: postId },
+            where: { likeUserId: userId, likePostId: postId },
             select: { id: true },
         }));
         const isVoted = Boolean(await this.primsa.vote.findFirst({
-            where: { userId: user.id, postId },
+            where: { userId, postId },
             select: { postId: true, userId: true },
         }));
         const commets = await this.primsa.comment.findMany({
@@ -52,24 +52,22 @@ let UserService = class UserService {
             select: { CommentLike: { select: { likeUserId: true } } },
         });
         const commentIsLikedArray = commets.map((item) => ({
-            isLiked: Boolean(item.CommentLike.find((item) => item.likeUserId === user.id)),
+            isLiked: Boolean(item.CommentLike.find((item) => item.likeUserId === userId)),
         }));
-        return { userId: user.id, isLiked, isVoted, commentIsLikedArray };
+        return { userId, isLiked, isVoted, commentIsLikedArray };
     }
-    async findMyReCommentInfo({ user, commentId }) {
+    async findMyReCommentInfo({ userId, commentId }) {
         const reComments = await this.primsa.reComment.findMany({
             where: { reCommentCommentId: commentId },
             select: { ReCommentLike: { select: { likeUserId: true } } },
         });
         const reCommentIsLikedArray = reComments.map((item) => ({
-            isLiked: Boolean(item.ReCommentLike.find((item) => item.likeUserId === user.id)),
+            isLiked: Boolean(item.ReCommentLike.find((item) => item.likeUserId === userId)),
         }));
         return { reCommentIsLikedArray };
     }
-    async findUser(user) {
-        return this.primsa.user.findUnique({
-            where: { id: user.id },
-        });
+    async findUser(userWhereUniqueInput) {
+        return this.primsa.user.findUnique({ where: userWhereUniqueInput });
     }
     async changeName({ userId, newName }) {
         return this.primsa.user.update({

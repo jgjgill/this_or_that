@@ -5,8 +5,10 @@ import { JwtAuthGuard } from 'src/jwt-auth/jwt-auth.guard';
 import { JwtAuthService } from 'src/jwt-auth/jwt-auth.service';
 import { GoogleOauthGuard } from './google-oauth.guard';
 import { LoggedInGuard } from '../jwt-auth/logged-in.guard';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('auth/google')
+@ApiTags('인증')
 export class GoogleOauthController {
   constructor(
     private readonly jwtAuthService: JwtAuthService,

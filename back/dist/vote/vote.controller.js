@@ -14,8 +14,10 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.VoteController = void 0;
 const common_1 = require("@nestjs/common");
+const swagger_1 = require("@nestjs/swagger");
 const user_decorator_1 = require("../common/decorators/user.decorator");
 const logged_in_guard_1 = require("../jwt-auth/logged-in.guard");
+const create_vote_dto_1 = require("./dto/create-vote.dto");
 const vote_service_1 = require("./vote.service");
 let VoteController = class VoteController {
     constructor(voteService) {
@@ -33,14 +35,16 @@ let VoteController = class VoteController {
 __decorate([
     (0, common_1.Post)(),
     (0, common_1.UseGuards)(logged_in_guard_1.LoggedInGuard),
+    (0, swagger_1.ApiOperation)({ summary: '투표 기능', description: '투표 기능' }),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, user_decorator_1.User)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:paramtypes", [create_vote_dto_1.CreateVoteDto, Object]),
     __metadata("design:returntype", Promise)
 ], VoteController.prototype, "createPostVote", null);
 VoteController = __decorate([
     (0, common_1.Controller)('vote'),
+    (0, swagger_1.ApiTags)('투표'),
     __metadata("design:paramtypes", [vote_service_1.VoteService])
 ], VoteController);
 exports.VoteController = VoteController;

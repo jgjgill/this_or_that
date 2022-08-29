@@ -3,11 +3,9 @@ import { Prisma, User } from '@prisma/client';
 export declare class UserService {
     private primsa;
     constructor(primsa: PrismaService);
-    findMyInfo({ userId }: {
-        userId: any;
-    }): Promise<User>;
+    findMyInfo(userWhereUniqueInput: Prisma.UserWhereUniqueInput): Promise<User>;
     findProfileInfo({ userId }: {
-        userId: any;
+        userId: number;
     }): Promise<User & {
         comments: import(".prisma/client").Comment[];
         posts: {
@@ -21,8 +19,8 @@ export declare class UserService {
             posts: number;
         };
     }>;
-    findMyPostInfo({ user, postId }: {
-        user: any;
+    findMyPostInfo({ userId, postId }: {
+        userId: any;
         postId: any;
     }): Promise<{
         userId: any;
@@ -32,17 +30,17 @@ export declare class UserService {
             isLiked: boolean;
         }[];
     }>;
-    findMyReCommentInfo({ user, commentId }: {
-        user: any;
+    findMyReCommentInfo({ userId, commentId }: {
+        userId: any;
         commentId: any;
     }): Promise<{
         reCommentIsLikedArray: {
             isLiked: boolean;
         }[];
     }>;
-    findUser(user: Prisma.UserWhereUniqueInput): Promise<User | null>;
+    findUser(userWhereUniqueInput: Prisma.UserWhereUniqueInput): Promise<User | null>;
     changeName({ userId, newName }: {
-        userId: any;
-        newName: any;
+        userId: number;
+        newName: string;
     }): Promise<User>;
 }
