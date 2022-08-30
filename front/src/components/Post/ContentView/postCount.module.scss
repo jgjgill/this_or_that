@@ -1,0 +1,67 @@
+@use '/src/styles/constants/colors';
+
+.voteWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.textWrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.countWrapper {
+  display: flex;
+  gap: 10px;
+}
+
+.barGraph {
+  position: relative;
+  height: 10px;
+  border-radius: 10px;
+
+  &::before {
+    position: absolute;
+    left: 0;
+    width: var(--this);
+    height: 10px;
+    content: '';
+    background-color: colors.$WHITE;
+    border-radius: 10px;
+    transition: 1s;
+    animation: this 1s;
+  }
+
+  &::after {
+    position: absolute;
+    right: 0;
+    width: var(--that);
+    height: 10px;
+    content: '';
+    background-color: colors.$BLACK;
+    border-radius: 10px;
+    transition: 1s;
+    animation: that 1s;
+  }
+}
+
+@keyframes this {
+  from {
+    width: 0;
+  }
+
+  to {
+    width: var(--this);
+  }
+}
+
+@keyframes that {
+  from {
+    width: 0;
+  }
+
+  to {
+    width: var(--that);
+  }
+}

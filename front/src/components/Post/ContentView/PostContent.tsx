@@ -2,12 +2,14 @@ import { useMutation } from '@tanstack/react-query'
 import { LikeIcon } from 'assets/svgs'
 import CreatedAtText from 'components/Common/Etc/CreatedAtText'
 import PreviewImage from 'components/Common/Etc/PreviewImage'
+import { useCookieLoginError } from 'hooks/useCookieLoginError'
 import { queryClient } from 'index'
 import { useEffect, useState } from 'react'
 import { IMyInfo, INewLike, INewPostVote, postNewPostLike, postNewPostVote } from 'services/api'
 import { cx } from 'styles'
 import { IPost } from 'types/post'
 import styles from './postContent.module.scss'
+import PostCount from './PostCount'
 
 interface PostContentProps {
   postContentData: IPost
@@ -16,6 +18,8 @@ interface PostContentProps {
 
 const PostContent = ({ postContentData, myPostInfoData }: PostContentProps) => {
   const [likeText, setLikeText] = useState('Like')
+
+  const notLoginError = useCookieLoginError()
 
   const mutationNewPostVote = useMutation((newPostVote: INewPostVote) => postNewPostVote(newPostVote), {
     onMutate: async ({ postId, assignedBy }) => {
@@ -69,19 +73,21 @@ const PostContent = ({ postContentData, myPostInfoData }: PostContentProps) => {
   })
 
   const handleClickThis = () => {
-    if (!myPostInfoData.userId) return
+    notLoginError()
+    if (myPostInfoData.voteContent?.assignedBy === 'this') return
 
     mutationNewPostVote.mutate({ postId: postContentData.id, assignedBy: 'this' })
   }
 
   const handleClickThat = () => {
-    if (!myPostInfoData.userId) return
+    notLoginError()
+    if (myPostInfoData.voteContent?.assignedBy === 'that') return
 
     mutationNewPostVote.mutate({ postId: postContentData.id, assignedBy: 'that' })
   }
 
   const handleClickLike = () => {
-    if (!myPostInfoData.userId) return
+    notLoginError()
 
     mutationNewPostLike.mutate({ postId: postContentData.id })
   }
@@ -93,11 +99,7 @@ const PostContent = ({ postContentData, myPostInfoData }: PostContentProps) => {
   return (
     <div className={styles.postContentWrapper}>
       <div>
-        <div>
-          <div />
-          <div>{postContentData.author.name}</div>
-        </div>
-
+        <div>{postContentData.author.name}</div>
         <CreatedAtText dateTime={postContentData.createdAt} />
       </div>
 
@@ -123,21 +125,12 @@ const PostContent = ({ postContentData, myPostInfoData }: PostContentProps) => {
 
       <hr />
 
-      <div>
-        {myPostInfoData.isVoted && (
-          <div>
-            <dl className={styles.countWrapper}>
-              <dt>thisCount</dt>
-              <dd>{postContentData.thisCount}</dd>
-            </dl>
-
-            <dl className={styles.countWrapper}>
-              <dt>thatCount</dt>
-              <dd>{postContentData.thatCount}</dd>
-            </dl>
-          </div>
-        )}
-      </div>
+      <PostCount
+        thisCount={postContentData.thisCount}
+        thatCount={postContentData.thatCount}
+        voters={postContentData._count.voters}
+        isView={myPostInfoData.isVoted}
+      />
 
       <hr />
 

@@ -18,6 +18,7 @@ export interface IMyInfo {
   userId?: number
   isLiked: boolean
   isVoted: boolean
+  voteContent?: { assignedBy: 'this' | 'that' }
   commentIsLikedArray: { isLiked: boolean }[]
 }
 

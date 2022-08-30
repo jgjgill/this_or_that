@@ -46,6 +46,11 @@ export class UserService {
       }),
     );
 
+    const voteContent = await this.primsa.vote.findFirst({
+      where: { userId, postId },
+      select: { assignedBy: true },
+    });
+
     const commets = await this.primsa.comment.findMany({
       where: { commentPostId: postId },
       select: { CommentLike: { select: { likeUserId: true } } },
@@ -57,7 +62,7 @@ export class UserService {
       ),
     }));
 
-    return { userId, isLiked, isVoted, commentIsLikedArray };
+    return { userId, isLiked, isVoted, voteContent, commentIsLikedArray };
   }
 
   async findMyReCommentInfo({ userId, commentId }) {
