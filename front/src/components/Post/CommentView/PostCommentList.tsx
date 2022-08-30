@@ -1,8 +1,9 @@
+import { IComment } from 'types/comment'
 import PostCommentItem from './PostCommentItem'
 import styles from './postCommentList.module.scss'
 
 interface PostCommentListProps {
-  postCommentsData: any[]
+  postCommentsData: IComment[]
   commentIsLikedArray: { isLiked: boolean }[]
 }
 

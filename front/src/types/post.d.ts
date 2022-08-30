@@ -10,16 +10,7 @@ export interface IPost {
   title: string
   createdAt: Date
   updatedAt: Date
-  comments: {
-    id: number
-    User: { name: string }
-    commentPostId: number
-    commentUserId: number
-    content: string
-    createdAt: Date
-    updatedAt: Date
-    _count: { CommentLike: number }
-  }[]
+  comments: IComment[]
   thisCount: number
   thatCount: number
   _count: { comments: number; likes: number; voters: number; ReComment: number }

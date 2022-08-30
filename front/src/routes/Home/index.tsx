@@ -1,4 +1,4 @@
-import PostList from 'components/Home/PostList'
+import PostList from 'components/Home/Post/PostList'
 import WriteButton from 'components/Home/WriteButton'
 
 const Home = () => {

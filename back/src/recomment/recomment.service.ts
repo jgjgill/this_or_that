@@ -7,7 +7,6 @@ export class RecommentService {
   constructor(private prisma: PrismaService) {}
 
   async createReComment(data: Prisma.ReCommentCreateInput) {
-    console.log(data);
     return this.prisma.reComment.create({ data });
   }
 }

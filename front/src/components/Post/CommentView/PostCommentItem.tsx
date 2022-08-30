@@ -11,30 +11,12 @@ import { useParams } from 'react-router-dom'
 import { getMyReCommentInfo, postNewCommentLike } from 'services/api'
 import { getReCommentModalValue, setToggleReCommentModal } from 'states/reCommentModalData'
 import { cx } from 'styles'
+import { IComment } from 'types/comment'
 import styles from './postCommentItem.module.scss'
 import PostReCommentItem from './PostReCommentItem'
 
 interface PostCommentItemProps {
-  postCommentData: {
-    id: number
-    commentPostId: number
-    commentUserId: number
-    content: string
-    User: { name: string }
-    ReComment: {
-      id: number
-      content: string
-      reCommentCommentId: number
-      reCommentUserId: number
-      User: { name: string }
-      _count: { ReCommentLike: number }
-      createdAt: Date
-      updatedAt: Date
-    }[]
-    _count: { CommentLike: number }
-    createdAt: Date
-    updatedAt: Date
-  }
+  postCommentData: IComment
   isLiked: boolean
 }
 

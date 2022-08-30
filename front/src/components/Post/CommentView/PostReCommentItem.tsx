@@ -8,19 +8,11 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { postNewReCommentLike } from 'services/api'
 import { cx } from 'styles'
+import { IReComment } from 'types/reComment'
 import styles from './postReCommentItem.module.scss'
 
 interface PostReCommentItemProps {
-  postReCommentData: {
-    id: number
-    content: string
-    reCommentCommentId: number
-    reCommentUserId: number
-    User: { name: string }
-    _count: { ReCommentLike: number }
-    createdAt: Date
-    updatedAt: Date
-  }
+  postReCommentData: IReComment
   isLiked: boolean
 }
 
