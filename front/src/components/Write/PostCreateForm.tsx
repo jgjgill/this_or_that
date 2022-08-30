@@ -1,4 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
+import SubmitButton from 'components/Common/Button/SubmitButton'
 import Input from 'components/Common/Input'
 import { useAppSelector } from 'hooks/useAppSelector'
 import { queryClient } from 'index'
@@ -70,9 +71,7 @@ const PostCreateForm = () => {
         error={formState.errors.description}
       />
 
-      <button type='submit' className={styles.submitButton}>
-        submit
-      </button>
+      <SubmitButton text='Submit' />
     </form>
   )
 }

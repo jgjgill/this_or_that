@@ -1,4 +1,5 @@
 import { useMutation } from '@tanstack/react-query'
+import SubmitButton from 'components/Common/Button/SubmitButton'
 import Input from 'components/Common/Input'
 import { queryClient } from 'index'
 import { SubmitHandler, useForm } from 'react-hook-form'
@@ -39,9 +40,7 @@ const NicknameForm = ({ name }: NicknameFormProps) => {
     <form onSubmit={handleSubmit(formValid)} className={styles.nicknameFormWrapper}>
       <Input placeholder={name} register={register('name', { required: true })} />
 
-      <button type='submit' className={styles.submitButton}>
-        Save
-      </button>
+      <SubmitButton text='Save' />
     </form>
   )
 }

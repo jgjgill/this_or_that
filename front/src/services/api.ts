@@ -65,7 +65,7 @@ export const postNewComment = (commentData: { comment: string }, postId: number)
 export const postNewReComment = (newReComment: string, postId: string, commentId: number) =>
   axios.post(`${url}/recomment?postId=${postId}&commentId=${commentId}`, newReComment)
 
-export const postNewCommentLike = (commentId: string) => axios.post(`${url}/like/comment?commentId=${commentId}`)
+export const postNewCommentLike = (commentId: number) => axios.post(`${url}/like/comment?commentId=${commentId}`)
 
 export const postNewReCommentLike = (reCommentId: number) =>
   axios.post(`${url}/like/recomment?reCommentId=${reCommentId}`)

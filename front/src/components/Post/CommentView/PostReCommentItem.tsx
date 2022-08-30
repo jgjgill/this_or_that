@@ -1,6 +1,8 @@
 import { useMutation } from '@tanstack/react-query'
 import { LikeIcon, RightArrowIcon } from 'assets/svgs'
+import IconButton from 'components/Common/Button/IconButton'
 import CreatedAtText from 'components/Common/Etc/CreatedAtText'
+import { useCookieLoginError } from 'hooks/useCookieLoginError'
 import { queryClient } from 'index'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -20,10 +22,11 @@ interface PostReCommentItemProps {
     updatedAt: Date
   }
   isLiked: boolean
-  userId?: number
 }
 
-const PostReCommentItem = ({ postReCommentData, isLiked, userId }: PostReCommentItemProps) => {
+const PostReCommentItem = ({ postReCommentData, isLiked }: PostReCommentItemProps) => {
+  const notLoginError = useCookieLoginError()
+
   const [likeText, setLikeText] = useState('Like')
 
   const { postId } = useParams()
@@ -36,7 +39,7 @@ const PostReCommentItem = ({ postReCommentData, isLiked, userId }: PostReComment
   })
 
   const handleClickLike = () => {
-    if (!userId) return
+    notLoginError()
 
     mutationNewReCommentLike.mutate()
   }
@@ -52,10 +55,11 @@ const PostReCommentItem = ({ postReCommentData, isLiked, userId }: PostReComment
         <span>{postReCommentData.content}</span>
 
         <div className={styles.reCommentBottomWrapper}>
-          <button type='button' onClick={handleClickLike} className={styles.likeButton}>
-            <LikeIcon className={cx(styles.svgIcon, { [styles.toggleLike]: isLiked })} />
-            <span className={styles.likeText}>{likeText}</span>
-          </button>
+          <IconButton
+            IconElement={<LikeIcon className={cx(styles.svgIcon, { [styles.toggleLike]: isLiked })} />}
+            onClick={handleClickLike}
+            text={likeText}
+          />
 
           <div className={styles.likeCountWrapper}>
             <LikeIcon className={cx(styles.svgIcon, styles.toggleLike)} />

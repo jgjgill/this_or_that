@@ -19,6 +19,7 @@ const BasicInfo = ({ email, name, createdAt }: BasicInfoProps) => {
         <dt>Name</dt>
         <dd>{name}</dd>
       </dl>
+
       <CreatedAtText dateTime={createdAt} />
     </div>
   )

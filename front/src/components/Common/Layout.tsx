@@ -5,7 +5,7 @@ import { useCookies } from 'react-cookie'
 import { Link, Outlet } from 'react-router-dom'
 import { getLogout, getAuthStatus } from 'services/api'
 import { getReCommentModalValue } from 'states/reCommentModalData'
-import Button from './Button'
+import BasicButton from './Button/BasicButton'
 import styles from './layout.module.scss'
 import ReCommentFormModal from './Modal/ReCommentFormModal'
 
@@ -41,8 +41,8 @@ const Layout = () => {
       </header>
 
       <nav className={styles.navBar}>
-        <Button onClick={handleClickLogin} isView={!cookie.jwt} text='Login' />
-        <Button onClick={handleClickLogout} isView={cookie.jwt} text='Logout' />
+        <BasicButton onClick={handleClickLogin} isView={!cookie.jwt} text='Login' />
+        <BasicButton onClick={handleClickLogout} isView={cookie.jwt} text='Logout' />
 
         <Link to='profile' className={styles.profile}>
           Profile

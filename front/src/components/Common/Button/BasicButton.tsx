@@ -1,4 +1,4 @@
-import styles from './button.module.scss'
+import styles from './basicButton.module.scss'
 
 interface ButtonProps {
   onClick: () => void
@@ -6,14 +6,14 @@ interface ButtonProps {
   text: string
 }
 
-const Button = ({ onClick, isView, text }: ButtonProps) => {
+const BasicButton = ({ onClick, isView, text }: ButtonProps) => {
   if (!isView) return null
 
   return (
     <button type='button' onClick={onClick} className={styles.button}>
-      {text}
+      <span>{text}</span>
     </button>
   )
 }
 
-export default Button
+export default BasicButton

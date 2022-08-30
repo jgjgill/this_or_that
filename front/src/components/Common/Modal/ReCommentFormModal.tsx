@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom'
 import { useClickAway } from 'react-use'
 import { postNewReComment } from 'services/api'
 import { setIsViewFalse } from 'states/reCommentModalData'
+import SubmitButton from '../Button/SubmitButton'
 import Input from '../Input'
 import styles from './reCommentFormModal.module.scss'
 
@@ -62,9 +63,7 @@ const ReCommentFormModal = ({ isView, commentId }: ReCommentFormModalProps) => {
     <form ref={ref} onSubmit={handleSubmit(formValid)} className={styles.reCommentForm}>
       <Input placeholder='ReComment' register={register('reComment', { required: true })} />
 
-      <button type='submit' className={styles.submitButton}>
-        Submit
-      </button>
+      <SubmitButton text='Submit' />
     </form>
   )
 }

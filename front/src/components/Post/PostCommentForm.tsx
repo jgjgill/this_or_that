@@ -1,4 +1,5 @@
 import { useMutation } from '@tanstack/react-query'
+import SubmitButton from 'components/Common/Button/SubmitButton'
 import Input from 'components/Common/Input'
 import { useCookieLoginError } from 'hooks/useCookieLoginError'
 import { queryClient } from 'index'
@@ -37,9 +38,7 @@ const PostCommentForm = ({ postId }: PostCommentProps) => {
     <form onSubmit={handleSubmit(formValid)} className={styles.commentForm}>
       <Input placeholder='comment' register={register('comment', { required: true })} />
 
-      <button type='submit' className={styles.submitButton}>
-        Submit
-      </button>
+      <SubmitButton text='Submit' />
     </form>
   )
 }

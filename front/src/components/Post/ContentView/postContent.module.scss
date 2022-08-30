@@ -53,27 +53,6 @@
   line-height: 20px;
 }
 
-.likeButton {
-  display: flex;
-  gap: 5px;
-  align-items: center;
-  padding: 10px;
-  margin-top: auto;
-  margin-right: auto;
-  color: colors.$WHITE;
-  border: 2px solid colors.$WHITE;
-  border-radius: 10px;
-  transition: 0.3s;
-
-  &:hover {
-    scale: 1.05;
-  }
-
-  .likeText {
-    width: 40px;
-  }
-}
-
 .svgIcon {
   width: 15px;
   height: 15px;

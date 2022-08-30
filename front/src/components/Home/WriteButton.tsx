@@ -1,4 +1,5 @@
 import { WriteIcon } from 'assets/svgs'
+import IconButton from 'components/Common/Button/IconButton'
 import { useNavigate } from 'react-router-dom'
 import styles from './writeButton.module.scss'
 

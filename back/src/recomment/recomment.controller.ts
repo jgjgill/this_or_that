@@ -23,11 +23,11 @@ export class RecommentController {
   @ApiQuery({ name: 'postId', example: 1, required: true })
   @ApiQuery({ name: 'commentId', example: 1, required: true })
   async createReComment(
-    @Query(ParseIntPipe) query,
+    @Query('commentId', ParseIntPipe) commentId,
+    @Query('postId', ParseIntPipe) postId,
     @Body() reCommentData: CreateReCoomentDto,
     @User() user,
   ) {
-    const { commentId, postId } = query;
     return this.recommentService.createReComment({
       User: { connect: { id: user.id } },
       Post: { connect: { id: postId } },

@@ -1,13 +1,14 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { ChatIcon, LikeIcon } from 'assets/svgs'
+import IconButton from 'components/Common/Button/IconButton'
 import CreatedAtText from 'components/Common/Etc/CreatedAtText'
 import { useAppDispatch } from 'hooks/useAppDispatch'
 import { useAppSelector } from 'hooks/useAppSelector'
+import { useCookieLoginError } from 'hooks/useCookieLoginError'
 import { queryClient } from 'index'
 import { useEffect, useState } from 'react'
-import { useCookies } from 'react-cookie'
 import { useParams } from 'react-router-dom'
-import { getMyPostInfo, getMyReCommentInfo, postNewCommentLike } from 'services/api'
+import { getMyReCommentInfo, postNewCommentLike } from 'services/api'
 import { getReCommentModalValue, setToggleReCommentModal } from 'states/reCommentModalData'
 import { cx } from 'styles'
 import styles from './postCommentItem.module.scss'
@@ -38,7 +39,7 @@ interface PostCommentItemProps {
 }
 
 const PostCommentItem = ({ postCommentData, isLiked }: PostCommentItemProps) => {
-  const [cookie] = useCookies(['jwt'])
+  const notLoginError = useCookieLoginError()
 
   const [likeText, setLikeText] = useState('Like')
 
@@ -58,13 +59,7 @@ const PostCommentItem = ({ postCommentData, isLiked }: PostCommentItemProps) => 
     }
   )
 
-  const { isError: myInfoIsError, data: myPostInfoData } = useQuery(
-    ['myPostInfo', postId],
-    () => getMyPostInfo(postId!),
-    { enabled: !!postId, staleTime: Infinity, cacheTime: Infinity }
-  )
-
-  const mutationNewCommentLike = useMutation((commentId: string) => postNewCommentLike(commentId), {
+  const mutationNewCommentLike = useMutation((commentId: number) => postNewCommentLike(commentId), {
     onSettled: () => {
       queryClient.invalidateQueries(['myPostInfo', postId])
       queryClient.invalidateQueries(['post', postId])
@@ -72,13 +67,13 @@ const PostCommentItem = ({ postCommentData, isLiked }: PostCommentItemProps) => 
   })
 
   const handleClickLike = () => {
-    if (!cookie.jwt) throw new Error('Login Error')
+    notLoginError()
 
-    mutationNewCommentLike.mutate(String(postCommentData.id))
+    mutationNewCommentLike.mutate(postCommentData.id)
   }
 
   const handleClickReComment = () => {
-    if (!cookie.jwt) throw new Error('Login Error')
+    notLoginError()
 
     dispatch(setToggleReCommentModal({ commentId: postCommentData.id }))
   }
@@ -93,10 +88,11 @@ const PostCommentItem = ({ postCommentData, isLiked }: PostCommentItemProps) => 
         <span>{postCommentData.content}</span>
 
         <div className={styles.commentBottomWrapper}>
-          <button type='button' onClick={handleClickLike} className={styles.likeButton}>
-            <LikeIcon className={cx(styles.svgIcon, { [styles.toggleLike]: isLiked })} />
-            <span className={styles.likeText}>{likeText}</span>
-          </button>
+          <IconButton
+            IconElement={<LikeIcon className={cx(styles.svgIcon, { [styles.toggleLike]: isLiked })} />}
+            onClick={handleClickLike}
+            text={likeText}
+          />
 
           <div className={styles.likeCountWrapper}>
             <LikeIcon className={cx(styles.svgIcon, styles.toggleLike)} />
@@ -122,7 +118,6 @@ const PostCommentItem = ({ postCommentData, isLiked }: PostCommentItemProps) => 
           key={item.id}
           postReCommentData={item}
           isLiked={myRecommentInfoData.reCommentIsLikedArray[index]?.isLiked || false}
-          userId={myPostInfoData?.userId}
         />
       ))}
 

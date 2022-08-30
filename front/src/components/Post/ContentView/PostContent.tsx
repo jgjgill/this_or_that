@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
 import { LikeIcon } from 'assets/svgs'
+import IconButton from 'components/Common/Button/IconButton'
 import CreatedAtText from 'components/Common/Etc/CreatedAtText'
 import PreviewImage from 'components/Common/Etc/PreviewImage'
 import { useCookieLoginError } from 'hooks/useCookieLoginError'
@@ -136,10 +137,11 @@ const PostContent = ({ postContentData, myPostInfoData }: PostContentProps) => {
 
       <p className={styles.postDescription}>{postContentData.description}</p>
 
-      <button type='button' onClick={handleClickLike} className={styles.likeButton}>
-        <LikeIcon className={cx(styles.svgIcon, { [styles.toggleLike]: myPostInfoData.isLiked })} />
-        <span className={styles.likeText}>{likeText}</span>
-      </button>
+      <IconButton
+        IconElement={<LikeIcon className={cx(styles.svgIcon, { [styles.toggleLike]: myPostInfoData.isLiked })} />}
+        onClick={handleClickLike}
+        text={likeText}
+      />
     </div>
   )
 }
