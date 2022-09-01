@@ -6,7 +6,6 @@ import reportWebVitals from 'reportWebVitals'
 import App from 'routes'
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { GoogleOAuthProvider } from '@react-oauth/google'
 import { CookiesProvider } from 'react-cookie'
 import { store } from './states'
 
@@ -18,13 +17,11 @@ const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <React.StrictMode>
     <CookiesProvider>
-      <GoogleOAuthProvider clientId={process.env.REACT_APP_OAUTH_CLIENT_ID!}>
-        <QueryClientProvider client={queryClient}>
-          <Provider store={store}>
-            <App />
-          </Provider>
-        </QueryClientProvider>
-      </GoogleOAuthProvider>
+      <QueryClientProvider client={queryClient}>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </QueryClientProvider>
     </CookiesProvider>
   </React.StrictMode>
 )

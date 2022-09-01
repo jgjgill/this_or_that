@@ -4,15 +4,18 @@ import { useEffect } from 'react'
 import { useCookies } from 'react-cookie'
 import { Link, Outlet } from 'react-router-dom'
 import { getLogout, getAuthStatus } from 'services/api'
+import { getloginRequestModalValue } from 'states/loginRequestModalData'
 import { getReCommentModalValue } from 'states/reCommentModalData'
 import BasicButton from './Button/BasicButton'
 import styles from './layout.module.scss'
+import LoginRequestModal from './Modal/LoginRequestModal'
 import ReCommentFormModal from './Modal/ReCommentFormModal'
 
 const Layout = () => {
   const [cookie] = useCookies(['jwt'])
 
-  const ReCommentModalValue = useAppSelector(getReCommentModalValue)
+  const reCommentModalValue = useAppSelector(getReCommentModalValue)
+  const loginRequestModalValue = useAppSelector(getloginRequestModalValue)
 
   const handleClickLogin = () => {
     window.location.href = process.env.REACT_APP_API_AUTH_GOOGLE_LOGIN_URL!
@@ -54,7 +57,8 @@ const Layout = () => {
       </main>
 
       <ModalPortal>
-        <ReCommentFormModal isView={ReCommentModalValue.isView} commentId={ReCommentModalValue.commentId!} />
+        <ReCommentFormModal isView={reCommentModalValue.isView} commentId={reCommentModalValue.commentId!} />
+        <LoginRequestModal isView={loginRequestModalValue.isView} />
       </ModalPortal>
     </div>
   )

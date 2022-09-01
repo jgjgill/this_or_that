@@ -1,0 +1,30 @@
+@use '/src/styles/constants/colors';
+
+.modalWrapper {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  z-index: 10;
+  transform: translate(-50%, -50%);
+  animation: loginRequest 1s;
+}
+
+.modalBackground {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: colors.$GRAY3;
+  opacity: 0.5;
+}
+
+@keyframes loginRequest {
+  from {
+    top: 0%;
+  }
+
+  to {
+    top: 20%;
+  }
+}
