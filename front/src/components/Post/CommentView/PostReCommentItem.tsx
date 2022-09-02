@@ -1,27 +1,35 @@
 import { useMutation } from '@tanstack/react-query'
-import { LikeIcon, RightArrowIcon } from 'assets/svgs'
+import { LikeIcon, RightArrowIcon, XCircleIcon } from 'assets/svgs'
 import IconButton from 'components/Common/Button/IconButton'
 import CreatedAtText from 'components/Common/Etc/CreatedAtText'
 import { useCookieLoginError } from 'hooks/useCookieLoginError'
 import { queryClient } from 'index'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { postNewReCommentLike } from 'services/api'
+import { deleteReComment, postNewReCommentLike } from 'services/api'
 import { cx } from 'styles'
 import { IReComment } from 'types/reComment'
 import styles from './postReCommentItem.module.scss'
 
 interface PostReCommentItemProps {
   postReCommentData: IReComment
+  userId: number | undefined
   isLiked: boolean
 }
 
-const PostReCommentItem = ({ postReCommentData, isLiked }: PostReCommentItemProps) => {
+const PostReCommentItem = ({ postReCommentData, userId, isLiked }: PostReCommentItemProps) => {
   const notLoginError = useCookieLoginError()
 
   const [likeText, setLikeText] = useState('Like')
 
   const { postId } = useParams()
+
+  const mutationRemoveReComment = useMutation((reCommentId: number) => deleteReComment(reCommentId), {
+    onSettled: () => {
+      queryClient.invalidateQueries(['myRecommentInfo', postReCommentData.reCommentCommentId])
+      queryClient.invalidateQueries(['post', postId])
+    },
+  })
 
   const mutationNewReCommentLike = useMutation(() => postNewReCommentLike(postReCommentData.id), {
     onSettled: () => {
@@ -29,6 +37,12 @@ const PostReCommentItem = ({ postReCommentData, isLiked }: PostReCommentItemProp
       queryClient.invalidateQueries(['post', postId])
     },
   })
+
+  const handleClickRemoveReComment = () => {
+    notLoginError()
+
+    mutationRemoveReComment.mutate(postReCommentData.id)
+  }
 
   const handleClickLike = () => {
     notLoginError()
@@ -45,6 +59,12 @@ const PostReCommentItem = ({ postReCommentData, isLiked }: PostReCommentItemProp
       <RightArrowIcon className={styles.rightArrowIcon} />
       <div className={styles.reCommentContent}>
         <span>{postReCommentData.content}</span>
+
+        {postReCommentData.reCommentUserId === userId && (
+          <button type='button' onClick={handleClickRemoveReComment} className={styles.removeButton}>
+            <XCircleIcon className={styles.removeSvgIcon} />
+          </button>
+        )}
 
         <div className={styles.reCommentBottomWrapper}>
           <IconButton

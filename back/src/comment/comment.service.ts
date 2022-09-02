@@ -10,5 +10,7 @@ export class CommentService {
     return this.prisma.comment.create({ data });
   }
 
-  async deleteComment() {}
+  async deleteComment(id: Prisma.CommentWhereUniqueInput) {
+    return this.prisma.comment.delete({ where: id });
+  }
 }

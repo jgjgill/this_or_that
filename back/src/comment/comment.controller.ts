@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Delete,
+  Param,
   ParseIntPipe,
   Post,
   Query,
@@ -15,7 +16,7 @@ import { CommentService } from './comment.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 
 @Controller('comment')
-// @UseGuards(LoggedInGuard)
+@UseGuards(LoggedInGuard)
 @ApiTags('댓글')
 export class CommentController {
   constructor(private readonly commentService: CommentService) {}
@@ -39,8 +40,11 @@ export class CommentController {
     });
   }
 
-  @Delete()
-  async deleteComment() {
-    return this.commentService.deleteComment();
+  @Delete(':commentId')
+  @ApiOperation({ summary: '댓글 삭제 기능', description: '댓글 삭제' })
+  async deleteComment(
+    @Param('commentId', ParseIntPipe) commentId: number,
+  ): Promise<Comment> {
+    return this.commentService.deleteComment({ id: commentId });
   }
 }

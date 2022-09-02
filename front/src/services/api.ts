@@ -71,3 +71,7 @@ export const postNewReCommentLike = (reCommentId: number) =>
   axios.post(`${url}/like/recomment?reCommentId=${reCommentId}`)
 
 export const deletePost = (postId: number) => axios.delete(`${url}/post/${postId}`)
+
+export const deleteComment = (commentId: number) => axios.delete(`${url}/comment/${commentId}`)
+
+export const deleteReComment = (ReCommentId: number) => axios.delete(`${url}/ReComment/${ReCommentId}`)

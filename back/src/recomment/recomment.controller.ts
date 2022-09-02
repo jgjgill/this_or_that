@@ -1,6 +1,8 @@
 import {
   Body,
   Controller,
+  Delete,
+  Param,
   ParseIntPipe,
   Post,
   Query,
@@ -19,7 +21,7 @@ export class RecommentController {
   constructor(private readonly recommentService: RecommentService) {}
 
   @Post()
-  @ApiOperation({ summary: '대댓글 생성', description: '대댓글 생성하기' })
+  @ApiOperation({ summary: '대댓글 생성 기능', description: '대댓글 생성' })
   @ApiQuery({ name: 'postId', example: 1, required: true })
   @ApiQuery({ name: 'commentId', example: 1, required: true })
   async createReComment(
@@ -34,5 +36,13 @@ export class RecommentController {
       Comment: { connect: { id: commentId } },
       content: reCommentData.comment,
     });
+  }
+
+  @Delete(':reCommentId')
+  @ApiOperation({ summary: '대댓글 삭제 기능', description: '대댓글 생성' })
+  async deleteReComment(
+    @Param('reCommentId', ParseIntPipe) reCommentId: number,
+  ) {
+    return this.recommentService.deleteReComment({ id: reCommentId });
   }
 }

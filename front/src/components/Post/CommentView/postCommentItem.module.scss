@@ -1,10 +1,23 @@
 @use '/src/styles/constants/colors';
 
 .commentWrapper {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 20px;
   padding: 10px;
+}
+
+.removeButton {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  z-index: 10;
+  transition: 0.3s;
+
+  &:hover {
+    scale: 1.05;
+  }
 }
 
 .commentBottomWrapper {
@@ -62,4 +75,17 @@
 
 .toggleLike {
   fill: colors.$WHITE;
+}
+
+.removeSvgIcon {
+  width: 20px;
+  height: 20px;
+  fill: colors.$WHITE;
+  stroke: colors.$GRAY3;
+  transition: 0.3s;
+
+  &:hover {
+    fill: colors.$GRAY3;
+    stroke: colors.$WHITE;
+  }
 }
