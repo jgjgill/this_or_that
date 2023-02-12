@@ -50,5 +50,4 @@
 - 작성 글 목록 (삭제 기능)
 
 # 📜개발 일지
-
-[This Or That](https://bit.ly/3IhGlI5)
+<a href="https://bit.ly/3IhGlI5" target="_blank">This Or That</a>
