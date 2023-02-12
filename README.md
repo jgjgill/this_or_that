@@ -11,19 +11,19 @@
 **FE** - `React`, `React Query`, `Redux Toolkit`, `SASS`
 
 # 🎥구현 영상
-<div style="text-align: center; font-weight: bold">로그인</div>
+### 로그인
 
 <img src="https://user-images.githubusercontent.com/79239852/218329236-56e11e97-b1e4-46c7-9700-1062c7c7b7f2.gif" />
 
-<div style="text-align: center; font-weight: bold">게시물1</div>
+### 게시물1
 
 <img src="https://user-images.githubusercontent.com/79239852/218329424-bdcffd1c-3164-4dbc-ac88-c764c9178764.gif" />
 
-<div style="text-align: center; font-weight: bold">게시물2</div>
+### 게시물2
 
 <img src="https://user-images.githubusercontent.com/79239852/218329282-1223d36d-1d08-44fb-937e-c5bb419e8824.gif" />
 
-<div style="text-align: center; font-weight: bold">프로필</div>
+### 프로필
 
 <img src="https://user-images.githubusercontent.com/79239852/218329579-83155642-ab99-4179-ac6a-e204eb9a17fa.gif" />
 
