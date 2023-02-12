@@ -1,12 +1,13 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
 import SubmitButton from 'components/Common/Button/SubmitButton'
 import Input from 'components/Common/Input'
+import { useAppDispatch } from 'hooks/useAppDispatch'
 import { useAppSelector } from 'hooks/useAppSelector'
 import { queryClient } from 'index'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { getMyInfo, postNewPost, postNewThatImage, postNewThisImage } from 'services/api'
-import { getThatImage, getThisImage, setThatImagePath, setThisImagePath } from 'states/imageData'
+import { getThatImage, getThisImage, setResetImage, setThatImagePath, setThisImagePath } from 'states/imageData'
 import { IPost } from 'types/post'
 import CreateImage from './Image/CreateImage'
 import styles from './postCreateForm.module.scss'
@@ -17,6 +18,8 @@ const PostCreateForm = () => {
     cacheTime: Infinity,
   })
 
+  const dispatch = useAppDispatch()
+
   const { register, handleSubmit, formState } = useForm<IPost>()
 
   const mutationNewPost = useMutation((newPost: IPost) => postNewPost(newPost), {
@@ -24,6 +27,7 @@ const PostCreateForm = () => {
       queryClient.resetQueries(['posts'])
       queryClient.invalidateQueries(['profileInfo'])
 
+      dispatch(setResetImage())
       navigate('/', { replace: true })
       window.scrollTo(0, 0)
     },

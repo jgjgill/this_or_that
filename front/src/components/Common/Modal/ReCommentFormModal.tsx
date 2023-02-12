@@ -27,8 +27,9 @@ const ReCommentFormModal = ({ isView, commentId }: ReCommentFormModalProps) => {
 
   const scrollToCommentId = (reCommentId: number) => {
     const comment = document.body.querySelector<HTMLDivElement>(
-      `.postReCommentItem_reCommentWrapper__Eqmbo${reCommentId}`
+      `.postReCommentItem_reCommentWrapper__MxQJg${reCommentId}`
     )
+
     if (!comment) return
 
     comment.scrollIntoView({ behavior: 'smooth' })
@@ -39,7 +40,6 @@ const ReCommentFormModal = ({ isView, commentId }: ReCommentFormModalProps) => {
       if (!data) return
 
       queryClient.invalidateQueries(['post', postId])
-
       setTimeout(() => {
         scrollToCommentId(data.data.id)
       }, 50)

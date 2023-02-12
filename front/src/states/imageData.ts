@@ -28,10 +28,14 @@ const systemSlice = createSlice({
     setThatImagePath: (state, action: PayloadAction<IImage>) => {
       state.value.thatImage = action.payload
     },
+    setResetImage: (state) => {
+      state.value.thisImage = INITIAL_STATE.value.thisImage
+      state.value.thatImage = INITIAL_STATE.value.thatImage
+    },
   },
 })
 
-export const { setThisImagePath, setThatImagePath } = systemSlice.actions
+export const { setThisImagePath, setThatImagePath, setResetImage } = systemSlice.actions
 
 export default systemSlice.reducer
 

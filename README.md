@@ -1,15 +1,33 @@
 # ✨개인 프로젝트 This Or That
 
 # 📝소개
-둘 중에 하나를 선택하는 컨셉과 커뮤니티 기능을 합친 프로젝트
+둘 중에 하나 (This Or That)를 선택하는 컨셉과 커뮤니티 기능을 합친 프로젝트
 
-# 개발 일지
-### 디자인
-피그마 공부하면서 진행하기!
+# 🚀기술 스택
+공통 - `TypeScript`
 
-### 페이지
-**레이아웃**
-- Logo, Navbar, WriteButton, ...
+**BE** - `NestJS`, `Mysql`, `Prisma`
+
+**FE** - `React`, `React Query`, `Redux Toolkit`, `SASS`
+
+# 🎥구현 영상
+<div style="text-align: center; font-weight: bold">로그인</div>
+
+<img src="https://user-images.githubusercontent.com/79239852/218329236-56e11e97-b1e4-46c7-9700-1062c7c7b7f2.gif" />
+
+<div style="text-align: center; font-weight: bold">게시물1</div>
+
+<img src="https://user-images.githubusercontent.com/79239852/218329424-bdcffd1c-3164-4dbc-ac88-c764c9178764.gif" />
+
+<div style="text-align: center; font-weight: bold">게시물2</div>
+
+<img src="https://user-images.githubusercontent.com/79239852/218329282-1223d36d-1d08-44fb-937e-c5bb419e8824.gif" />
+
+<div style="text-align: center; font-weight: bold">프로필</div>
+
+<img src="https://user-images.githubusercontent.com/79239852/218329579-83155642-ab99-4179-ac6a-e204eb9a17fa.gif" />
+
+# 📌기능
 
 **홈**
 - 게시판 목록 (무한 스크롤 활용)
@@ -21,10 +39,7 @@
 - 댓글, 대댓글, 좋아요
 
 **게시판 작성**
-- Title
-- This, That
-- Image
-- Description
+- 게시판 추가 (제목, This, That, 이미지, 설명)
 
 **로그인, 회원가입**
 - OAuth 활용 (Google)
@@ -34,18 +49,6 @@
 - 닉네임 변경 기능
 - 작성 글 목록 (삭제 기능)
 
-### 느낀 점
-**배포**
-- AWS E2C를 처음 사용하면서 많은 시행착오를 겪음, 우선 프론트쪽만 해보고 비용 문제로 학습 중단
-- NGINX에 대해서도 처음으로 접하면서 공부할 수 있었음
+# 📜개발 일지
 
-**API 설계**
-- 점점 기능을 추가하다 보니 api활용에 있어서 일관적이지 못하고 처음 생각했던 규칙에 벗어나는 상황이 발생, 설계의 중요성을 느낄 수 있었음
-- 백엔드와 프론트엔드쪽에서의 어려운 측면들을 경험해볼 수 있었음
-
-**인증/인가**
-- OAuth를 사용해보고 싶어서 Google Oauth를 선택
-- 처음 구현해보는 것이여서 많은 고생이 있었지만 값진 경험이었음
-
-# 구현 영상
-`TODO`
+[This Or That](https://bit.ly/3IhGlI5)

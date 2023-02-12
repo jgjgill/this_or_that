@@ -1,10 +1,9 @@
-import { useMutation } from '@tanstack/react-query'
+import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query'
 import { LikeIcon } from 'assets/svgs'
 import IconButton from 'components/Common/Button/IconButton'
 import CreatedAtText from 'components/Common/Etc/CreatedAtText'
 import PreviewImage from 'components/Common/Etc/PreviewImage'
 import { useCookieLoginError } from 'hooks/useCookieLoginError'
-import { queryClient } from 'index'
 import { useEffect, useState } from 'react'
 import { IMyInfo, INewLike, INewPostVote, postNewPostLike, postNewPostVote } from 'services/api'
 import { cx } from 'styles'
@@ -19,6 +18,7 @@ interface PostContentProps {
 
 const PostContent = ({ postContentData, myPostInfoData }: PostContentProps) => {
   const [likeText, setLikeText] = useState('Like')
+  const queryClient = useQueryClient()
 
   const notLoginError = useCookieLoginError()
 
@@ -70,6 +70,7 @@ const PostContent = ({ postContentData, myPostInfoData }: PostContentProps) => {
     },
     onSettled: () => {
       queryClient.invalidateQueries(['myPostInfo'])
+      queryClient.invalidateQueries(['posts'])
     },
   })
 
@@ -96,6 +97,10 @@ const PostContent = ({ postContentData, myPostInfoData }: PostContentProps) => {
   useEffect(() => {
     myPostInfoData.isLiked ? setLikeText('UnLike') : setLikeText('Like')
   }, [myPostInfoData.isLiked])
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   return (
     <div className={styles.postContentWrapper}>
